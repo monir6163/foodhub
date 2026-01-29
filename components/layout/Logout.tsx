@@ -2,6 +2,7 @@
 import { authClient } from "@/lib/auth-client";
 import { LogOutIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 
 export default function Logout() {
@@ -12,6 +13,7 @@ export default function Logout() {
         onSuccess: () => {
           push("/");
           refresh();
+          toast.success("Logged out successfully!");
         },
       },
     });

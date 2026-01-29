@@ -26,10 +26,8 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2 text-center sm:text-left">
             <div className="flex items-center gap-2 mb-4 justify-center sm:justify-start">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-xl">
-                  F
-                </span>
+              <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center">
+                <span className="text-white font-bold text-xl">F</span>
               </div>
               <span className="text-xl font-bold text-foreground">FoodHub</span>
             </div>

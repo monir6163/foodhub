@@ -27,7 +27,7 @@ export const HowItWorks = () => {
       <div className="section-container">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-primary font-semibold text-sm uppercase tracking-wider">
+          <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">
             Simple Process
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-3 mb-4">
@@ -52,8 +52,8 @@ export const HowItWorks = () => {
               </span>
 
               {/* Icon */}
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-red-600 group-hover:scale-110 transition-all duration-300">
-                <step.icon className="w-8 h-8 text-primary group-hover:text-white transition-colors" />
+              <div className="w-16 h-16 rounded-2xl bg-red-600/10 flex items-center justify-center mb-6 group-hover:bg-red-600 group-hover:scale-110 transition-all duration-300">
+                <step.icon className="w-8 h-8 text-red-600 group-hover:text-white transition-colors" />
               </div>
 
               {/* Content */}
