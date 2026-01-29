@@ -10,7 +10,7 @@ export default function CommonLayout({
   return (
     <>
       <Navbar />
-      {children}
+      <main className="pt-16">{children}</main>
       <Footer />
     </>
   );

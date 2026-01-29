@@ -42,7 +42,7 @@ export default function Navbar() {
           : "bg-background border-b"
       }`}
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4">
         {/* Left - Logo */}
         <Link href="/" className="text-xl font-bold flex items-center gap-2">
           <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center">
