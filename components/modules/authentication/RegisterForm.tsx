@@ -191,7 +191,7 @@ export function RegisterForm({
             <Image
               width={800}
               height={400}
-              src="/placeholder.svg"
+              src="/hero-food.jpg"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />

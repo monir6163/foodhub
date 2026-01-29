@@ -10,7 +10,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-// import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useForm } from "@tanstack/react-form";
 import { Eye, EyeOff } from "lucide-react";
@@ -39,14 +39,15 @@ export function LoginForm({
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...");
       try {
-        // const { error } = await authClient.signIn.email(value);
-        // if (error) {
-        //   toast.error(error.message, { id: toastId });
-        //   return;
-        // }
-        // toast.success("Logged in successfully!", {
-        //   id: toastId,
-        // });
+        console.log(value);
+        const { error } = await authClient.signIn.email(value);
+        if (error) {
+          toast.error(error.message, { id: toastId });
+          return;
+        }
+        toast.success("Logged in successfully!", {
+          id: toastId,
+        });
       } catch (error) {
         toast.error("An unexpected error occurred. Please try again.", {
           id: toastId,
@@ -187,7 +188,7 @@ export function LoginForm({
             <Image
               width={800}
               height={400}
-              src="/placeholder.svg"
+              src="/hero-food.jpg"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
