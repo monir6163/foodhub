@@ -11,7 +11,6 @@ const roleDashboardMap: Record<string, string> = {
 };
 export default async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-
   const { data } = await userService.getSession();
   const user = data?.user;
   const isAuthenticated = !!user;

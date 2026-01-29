@@ -1,8 +1,8 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { ProfileDropdown } from "@/components/layout/ProfileDropdown";
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { ROLES } from "@/constants/Roles";
 import { userService } from "@/services/user.service";
+import Link from "next/link";
 
 export default async function DashboardLayout({
   admin,
@@ -38,17 +39,24 @@ export default async function DashboardLayout({
           />
           <Breadcrumb>
             <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">
-                  Building Your Application
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                <Link href="/">Website</Link>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>
+                  {data.user.role === ROLES.ADMIN
+                    ? "Admin Dashboard"
+                    : data.user.role === ROLES.CUSTOMER
+                      ? "Dashboard"
+                      : "Provider Dashboard"}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
+          <div className="ml-auto">
+            <ProfileDropdown user={data.user} />
+          </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
           {data.user.role === ROLES.ADMIN

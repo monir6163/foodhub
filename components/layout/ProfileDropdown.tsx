@@ -6,9 +6,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Roles } from "@/constants/Roles";
-import { LayoutDashboardIcon, LogOutIcon, ShoppingBagIcon } from "lucide-react";
+import { LayoutDashboardIcon, ShoppingBagIcon } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Logout from "./Logout";
 
 export function ProfileDropdown({ user }: { user: any }) {
   const role: Roles = user?.role;
@@ -69,9 +70,8 @@ export function ProfileDropdown({ user }: { user: any }) {
           );
         })}
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" className="cursor-pointer">
-          <LogOutIcon className="h-4 w-4" />
-          Log out
+        <DropdownMenuItem>
+          <Logout />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
