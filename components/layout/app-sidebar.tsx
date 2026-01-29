@@ -15,6 +15,7 @@ import {
 import { ROLES } from "@/constants/Roles";
 import { AdminRoutes } from "@/routes/AdminRoutes";
 import { CustomerRoutes } from "@/routes/CustomerRoutes";
+import { ProviderRoutes } from "@/routes/ProviderRoutes";
 import { Route } from "@/types";
 import Link from "next/link";
 import { Separator } from "../ui/separator";
@@ -30,6 +31,10 @@ export function AppSidebar({
       break;
     case ROLES.CUSTOMER:
       routes = CustomerRoutes;
+      break;
+
+    case ROLES.PROVIDER:
+      routes = ProviderRoutes;
       break;
 
     default:
