@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Loader2, Menu } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { authClient } from "@/lib/auth-client";
 import { ModeToggle } from "./ModeToggle";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 const navItems = [
   { name: "Home", href: "#" },
@@ -24,6 +26,7 @@ const navItems = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { data: session, isPending } = authClient.useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,25 +68,35 @@ export default function Navbar() {
         </nav>
 
         {/* Right - Auth Buttons (Desktop) */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-4">
           <ModeToggle />
-          <Button variant="ghost" asChild>
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button asChild>
-            <Link href="/register">Register</Link>
-          </Button>
+          {isPending ? (
+            <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+          ) : session?.user ? (
+            <ProfileDropdown user={session?.user} />
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">Register</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu */}
         <div className="md:hidden">
           <Sheet>
-            <ModeToggle />
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
+            <div className="flex items-center gap-2">
+              <ModeToggle />
+              <SheetTrigger asChild>
+                <Button variant="secondary" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+            </div>
 
             <SheetContent side="right" className="w-64">
               <SheetHeader className="hidden">
@@ -105,13 +118,33 @@ export default function Navbar() {
                 </nav>
 
                 {/* Mobile Auth Buttons */}
-                <div className="flex flex-col gap-3">
-                  <Button variant="outline" asChild>
-                    <Link href="/login">Login</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link href="/register">Register</Link>
-                  </Button>
+                <div className="flex flex-col gap-4 mt-4">
+                  {isPending ? (
+                    <div className="flex items-center justify-center py-2">
+                      <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : session?.user ? (
+                    <div className="flex items-center gap-3 p-3 border rounded-lg">
+                      <ProfileDropdown user={session?.user} />
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">
+                          {session.user.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {session.user.email}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <Button variant="outline" asChild>
+                        <Link href="/login">Login</Link>
+                      </Button>
+                      <Button asChild>
+                        <Link href="/register">Register</Link>
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </SheetContent>
