@@ -1,5 +1,6 @@
 import { categoryActions } from "@/actions/categories";
 import { CategorySlider } from "@/components/modules/Home/CategorySlider";
+import HeroSection from "@/components/modules/Home/Hero";
 import { HowItWorks } from "@/components/modules/Home/HowItWorks";
 import { OrderTracking } from "@/components/modules/Home/OrderTracking";
 import { PopularMeals } from "@/components/modules/Home/PopularMeals";
@@ -33,7 +34,7 @@ export default async function Home() {
 
   return (
     <>
-      {/* <HeroSection /> */}
+      <HeroSection />
       <Suspense fallback={<CategorySliderSkeleton />}>
         <CategorySlider categories={categories} />
       </Suspense>
