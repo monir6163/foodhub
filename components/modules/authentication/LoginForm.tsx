@@ -41,8 +41,7 @@ export function LoginForm({
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...");
       try {
-        console.log(value);
-        const { error } = await authClient.signIn.email(value);
+        const { error, data } = await authClient.signIn.email(value);
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
@@ -50,6 +49,7 @@ export function LoginForm({
         toast.success("Logged in successfully!", {
           id: toastId,
         });
+        console.log("user", data);
         router.push("/");
       } catch (error) {
         toast.error("An unexpected error occurred. Please try again.", {
