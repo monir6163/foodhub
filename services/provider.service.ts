@@ -7,6 +7,11 @@ export const providerService = {
         headers: {
           "Content-Type": "application/json",
         },
+        next: {
+          // Revalidate every 1 minute
+          revalidate: 60,
+          tags: ["providers-list"],
+        },
       });
 
       if (!res.ok) {
@@ -17,12 +22,42 @@ export const providerService = {
         };
       }
       const data = await res.json();
+      console.log(data);
       return { data: data, error: null, status: true };
     } catch (error) {
       console.log(error);
       return {
         data: null,
         message: "Failed to fetch provider data",
+        status: false,
+      };
+    }
+  },
+
+  getProviderById: async function (id: string) {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/providers/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!res.ok) {
+        return {
+          data: null,
+          message: "Failed to fetch provider details",
+          status: false,
+        };
+      }
+      const data = await res.json();
+      console.log("data", data);
+      return { data: data, error: null, status: true };
+    } catch (error) {
+      console.log(error);
+      return {
+        data: null,
+        message: "Failed to fetch provider details",
         status: false,
       };
     }

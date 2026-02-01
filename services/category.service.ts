@@ -8,8 +8,9 @@ export const categoryService = {
           "Content-Type": "application/json",
         },
         next: {
-          revalidate: 600, // Cache for 10 minutes (categories change less frequently)
-          tags: ["categories"], // Enable on-demand revalidation
+          // Revalidate every 1 minute
+          revalidate: 60,
+          tags: ["categories"],
         },
       });
 
@@ -21,6 +22,7 @@ export const categoryService = {
         };
       }
       const data = await res.json();
+      console.log(data);
       return { data: data, error: null, status: true };
     } catch (error) {
       console.log(error);

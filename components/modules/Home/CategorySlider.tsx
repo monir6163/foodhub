@@ -18,7 +18,6 @@ export function CategorySlider({
   categories: any[] | undefined;
 }) {
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
-
   // Fallback images for categories
   const getCategoryImage = (categoryName: string) => {
     const images: { [key: string]: string } = {
@@ -102,7 +101,7 @@ export function CategorySlider({
                       {/* Category Name */}
                       <div className="absolute inset-0 flex items-end justify-center p-4">
                         <span className="text-white font-bold text-base md:text-lg text-center drop-shadow-lg group-hover:scale-110 transition-transform duration-300 group-hover:text-red-600">
-                          {category?.name}
+                          {category?.name} ({category?._count?.meals || 0})
                         </span>
                       </div>
                     </div>
