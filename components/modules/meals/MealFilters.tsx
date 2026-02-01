@@ -12,7 +12,11 @@ import { useState } from "react";
 
 interface MealFiltersProps {
   onFilterChange: (filters: FilterValues) => void;
+  onClearSearch: () => void;
   filters: FilterValues;
+  cuisines?: string[];
+  dietaryOptions?: string[];
+  mealTypes?: string[];
 }
 
 export interface FilterValues {
@@ -25,22 +29,6 @@ export interface FilterValues {
   sortOrder: string;
 }
 
-const cuisines = [
-  "All",
-  "Bangladeshi",
-  "American",
-  "International",
-  "Indian",
-  "Chinese",
-];
-const dietaryOptions = [
-  "halal",
-  "vegetarian",
-  "vegan",
-  "gluten-free",
-  "low-carb",
-];
-const mealTypes = ["All", "Breakfast", "Lunch", "Diner", "Snack"];
 const spiceLevels = ["All", "Low", "Medium", "High"];
 const sortOptions = [
   { value: "createdAt", label: "Newest First" },
@@ -53,8 +41,18 @@ const sortOrders = [
   { value: "asc", label: "Ascending" },
 ];
 
-export function MealFilters({ onFilterChange, filters }: MealFiltersProps) {
+export function MealFilters({
+  onFilterChange,
+  onClearSearch,
+  filters,
+  cuisines = [],
+  dietaryOptions = [],
+  mealTypes = [],
+}: MealFiltersProps) {
   const [isOpen, setIsOpen] = useState(true);
+
+  const cuisineList = ["All", ...cuisines];
+  const mealTypeList = ["All", ...mealTypes];
 
   const handleCuisineChange = (value: string) => {
     onFilterChange({ ...filters, cuisine: value });
@@ -88,6 +86,7 @@ export function MealFilters({ onFilterChange, filters }: MealFiltersProps) {
   };
 
   const handleClearFilters = () => {
+    onClearSearch();
     onFilterChange({
       cuisine: "All",
       dietary: [],
@@ -139,7 +138,7 @@ export function MealFilters({ onFilterChange, filters }: MealFiltersProps) {
             value={filters.cuisine}
             onValueChange={handleCuisineChange}
           >
-            {cuisines.map((cuisine) => (
+            {cuisineList.map((cuisine) => (
               <div key={cuisine} className="flex items-center space-x-2">
                 <RadioGroupItem value={cuisine} id={`cuisine-${cuisine}`} />
                 <Label
@@ -186,7 +185,7 @@ export function MealFilters({ onFilterChange, filters }: MealFiltersProps) {
             value={filters.mealType}
             onValueChange={handleMealTypeChange}
           >
-            {mealTypes.map((type) => (
+            {mealTypeList.map((type) => (
               <div key={type} className="flex items-center space-x-2">
                 <RadioGroupItem value={type} id={`mealType-${type}`} />
                 <Label

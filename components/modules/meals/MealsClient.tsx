@@ -2,9 +2,9 @@
 
 import { Input } from "@/components/ui/input";
 import { MealsClientPropsType } from "@/types/meal.type";
-import { Search, Utensils } from "lucide-react";
+import { Loader, Search, Utensils } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { MealCard } from "./MealCard";
 import { FilterValues, MealFilters } from "./MealFilters";
 import { Pagination } from "./Pagination";
@@ -12,9 +12,13 @@ import { Pagination } from "./Pagination";
 export function MealsClient({
   initialMeals,
   initialPagination,
+  cuisines,
+  dietaryOptions,
+  mealTypes,
 }: MealsClientPropsType) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
 
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("search") || "",
@@ -31,6 +35,18 @@ export function MealsClient({
     sortBy: searchParams.get("sortBy") || "createdAt",
     sortOrder: searchParams.get("sortOrder") || "desc",
   });
+
+  // Debounce search
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const currentSearch = searchParams.get("search") || "";
+      if (searchQuery !== currentSearch) {
+        updateURL(1, filters, searchQuery);
+      }
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   const updateURL = useCallback(
     (page: number, currentFilters: FilterValues, search: string) => {
@@ -52,7 +68,9 @@ export function MealsClient({
       params.set("sortBy", currentFilters.sortBy);
       params.set("sortOrder", currentFilters.sortOrder);
 
-      router.push(`/meals?${params.toString()}`);
+      startTransition(() => {
+        router.push(`/meals?${params.toString()}`);
+      });
     },
     [router],
   );
@@ -62,21 +80,39 @@ export function MealsClient({
     updateURL(1, newFilters, searchQuery);
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
   const handlePageChange = (page: number) => {
     updateURL(page, filters, searchQuery);
   };
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value);
-    updateURL(1, filters, value);
   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {isPending && (
+          <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
+            <div className="text-center flex justify-center gap-1">
+              <Loader className="mx-auto h-6 w-6 text-primary animate-spin" />
+              <p className=" text-primary">Please wait...</p>
+            </div>
+          </div>
+        )}
         {/* Sidebar */}
         <aside className="lg:col-span-1">
-          <MealFilters filters={filters} onFilterChange={handleFilterChange} />
+          <MealFilters
+            filters={filters}
+            onFilterChange={handleFilterChange}
+            onClearSearch={handleClearSearch}
+            cuisines={cuisines}
+            dietaryOptions={dietaryOptions}
+            mealTypes={mealTypes}
+          />
         </aside>
 
         {/* Main Content */}

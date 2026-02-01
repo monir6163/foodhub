@@ -35,8 +35,8 @@ export interface MealType {
   isAvailable: boolean;
   calories: number;
   ingredients: string[];
-  cuisine: string;
-  dietary: string[];
+  cuisine?: string[];
+  dietary?: string[];
   mealType: string | null;
   spiceLevel: string | null;
 }
@@ -49,4 +49,26 @@ export interface MealsClientPropsType {
     limit: number;
     totalPages: number;
   };
+  cuisines: string[];
+  dietaryOptions: string[];
+  mealTypes: string[];
+}
+
+export interface MealType {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  image: string | null;
+  isAvailable: boolean;
+  calories: number;
+  ingredients: string[];
+  cuisine?: string[];
+  dietary?: string[];
+  mealType: string | null;
+  spiceLevel: string | null;
+}
+
+export interface MealCardProps {
+  meal: MealType;
 }

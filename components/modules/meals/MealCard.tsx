@@ -8,29 +8,27 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Clock, Flame, ShoppingCart, Utensils } from "lucide-react";
+import { useCartStore } from "@/store/useCartStore";
+import { MealCardProps } from "@/types/meal.type";
+import { Clock, Eye, Flame, ShoppingCart, Utensils } from "lucide-react";
 import Image from "next/image";
-
-interface Meal {
-  id: string;
-  name: string;
-  description: string | null;
-  price: number;
-  image: string | null;
-  isAvailable: boolean;
-  calories: number;
-  ingredients: string[];
-  cuisine: string;
-  dietary: string[];
-  mealType: string | null;
-  spiceLevel: string | null;
-}
-
-interface MealCardProps {
-  meal: Meal;
-}
+import Link from "next/link";
+import { toast } from "sonner";
 
 export function MealCard({ meal }: MealCardProps) {
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleAddToCart = () => {
+    addItem({
+      id: meal.id,
+      name: meal.name,
+      price: meal.price,
+      image: meal.image,
+      isAvailable: meal.isAvailable,
+    });
+    toast.success(`${meal.name} added to cart!`);
+  };
+
   return (
     <Card className="group overflow-hidden border-2 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 py-0">
       <CardHeader className="p-0 relative">
@@ -49,9 +47,9 @@ export function MealCard({ meal }: MealCardProps) {
           )}
 
           <div className="absolute top-2 right-2 flex gap-2">
-            {meal.cuisine && (
+            {meal.cuisine && meal.cuisine.length > 0 && (
               <Badge className="bg-primary/90 backdrop-blur">
-                {meal.cuisine}
+                {meal.cuisine[0]}
               </Badge>
             )}
           </div>
@@ -77,7 +75,7 @@ export function MealCard({ meal }: MealCardProps) {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {meal.dietary.slice(0, 2).map((diet) => (
+          {meal.dietary?.slice(0, 2).map((diet) => (
             <Badge key={diet} variant="outline" className="text-xs capitalize">
               {diet}
             </Badge>
@@ -105,19 +103,32 @@ export function MealCard({ meal }: MealCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="p-4 pt-0 flex items-center justify-between">
-        <div className="flex items-center gap-1">
-          <span className="text-sm text-muted-foreground">৳</span>
-          <span className="text-2xl font-bold">{meal.price}</span>
+      <CardFooter className="p-4 pt-0 flex flex-col gap-3">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-muted-foreground">৳</span>
+            <span className="text-2xl font-bold">{meal.price}</span>
+          </div>
+          <Button
+            size="sm"
+            disabled={!meal.isAvailable}
+            onClick={handleAddToCart}
+            className="group-hover:bg-primary group-hover:text-primary-foreground transition-all"
+          >
+            <ShoppingCart className="h-4 w-4 mr-1" />
+            Add to Cart
+          </Button>
         </div>
-        <Button
-          size="sm"
-          disabled={!meal.isAvailable}
-          className="group-hover:bg-primary group-hover:text-primary-foreground transition-all"
-        >
-          <ShoppingCart className="h-4 w-4 mr-1" />
-          Add to Cart
-        </Button>
+        <Link href={`/meals/${meal.id}`} className="w-full">
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full border-primary/50 hover:bg-primary/10"
+          >
+            <Eye className="h-4 w-4 mr-2" />
+            View Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

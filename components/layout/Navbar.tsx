@@ -14,6 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { authClient } from "@/lib/auth-client";
+import { CartButton } from "./CartButton";
 import { ModeToggle } from "./ModeToggle";
 import { ProfileDropdown } from "./ProfileDropdown";
 
@@ -79,6 +80,7 @@ export default function Navbar() {
 
           {/* Right - Auth Buttons (Desktop) */}
           <div className="hidden md:flex items-center gap-4">
+            <CartButton />
             <ModeToggle />
             {isPending ? (
               <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />

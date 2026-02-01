@@ -60,12 +60,24 @@ export default async function MealsPage({
   searchParams: Promise<SearchParamsType>;
 }) {
   const params = await searchParams;
-  const { meals, pagination } = await getMeals(params);
+  const [{ meals, pagination }, cuisinesRes, dietaryRes, mealTypesRes] =
+    await Promise.all([
+      getMeals(params),
+      mealService.getCuisineOptions(),
+      mealService.getDietaryOptions(),
+      mealService.getMealTypes(),
+    ]);
 
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20">
       <MealsHero />
-      <MealsClient initialMeals={meals} initialPagination={pagination} />
+      <MealsClient
+        initialMeals={meals}
+        initialPagination={pagination}
+        cuisines={cuisinesRes.data || []}
+        dietaryOptions={dietaryRes.data || []}
+        mealTypes={mealTypesRes.data || []}
+      />
     </div>
   );
 }
