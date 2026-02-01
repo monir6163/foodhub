@@ -1,15 +1,22 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { Clock, DollarSign, Flame, ShoppingCart, Star } from "lucide-react";
+import {
+  Clock,
+  DollarSign,
+  EyeIcon,
+  Flame,
+  ShoppingCart,
+  Star,
+} from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 interface Meal {
@@ -155,14 +162,13 @@ export function ProviderMealsGrid({
                 <DollarSign className="h-5 w-5 text-primary" />
                 <span className="text-2xl font-bold">{meal.price}</span>
               </div>
-              <Button
-                size="sm"
-                disabled={!meal.isAvailable}
-                className="group-hover:bg-primary group-hover:text-primary-foreground transition-all"
+              <Link
+                href={`/meals/${meal.id}`}
+                className="inline-flex items-center px-3 py-2 bg-primary/10 text-primary font-medium rounded-md hover:bg-primary/20 transition-colors"
               >
-                <ShoppingCart className="h-4 w-4 mr-1" />
-                Add to Cart
-              </Button>
+                <EyeIcon className="h-4 w-4 mr-1" />
+                View Meal
+              </Link>
             </CardFooter>
           </Card>
         ))}

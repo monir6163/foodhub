@@ -15,16 +15,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-interface MealDetailsPageProps {
-  params: {
-    id: string;
-  };
-}
-
 export default async function MealDetailsPage({
   params,
-}: MealDetailsPageProps) {
-  const { id } = params;
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
   // Using demo data
   const meal = getMealById(id);
