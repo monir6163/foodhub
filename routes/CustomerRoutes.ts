@@ -2,7 +2,7 @@ import { Route } from "@/types";
 
 export const CustomerRoutes: Route[] = [
   {
-    title: "User Dashboard",
+    title: "Customer Dashboard",
     items: [
       {
         title: "Dashboard",
@@ -10,16 +10,9 @@ export const CustomerRoutes: Route[] = [
         isActive: true,
       },
       {
-        title: "Create Blog",
-        url: "/dashboard/create-blog",
-      },
-      {
-        title: "History Blogs",
-        url: "/dashboard/history-blogs",
-      },
-      {
-        title: "Analytics",
-        url: "/dashboard/analytics",
+        title: "My Orders",
+        url: "/dashboard/orders",
+        isActive: false,
       },
     ],
   },

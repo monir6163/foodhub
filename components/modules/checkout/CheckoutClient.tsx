@@ -45,11 +45,11 @@ export function CheckoutClient() {
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (mounted && items.length === 0) {
-      router.push("/cart");
-    }
-  }, [mounted, items.length, router]);
+  // useEffect(() => {
+  //   if (mounted && items.length === 0) {
+  //     router.push("/cart");
+  //   }
+  // }, [mounted, items.length, router]);
 
   if (!mounted) {
     return (
@@ -111,12 +111,10 @@ export function CheckoutClient() {
         toast.error(result.message || "Failed to place order");
         return;
       }
-
-      // Clear cart after successful order
-      clearCart();
-
       toast.success("Order placed successfully!");
       router.push("/orders/success");
+      // Clear cart after successful order
+      clearCart();
     } catch (error) {
       console.error("Order error:", error);
       toast.error("Failed to place order. Please try again.");

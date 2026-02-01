@@ -43,14 +43,14 @@ export const orderService = {
     }
   },
 
-  getMyOrders: async function () {
+  getMyOrders: async function (cookie: any) {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/orders/my-orders`, {
+      const res = await fetch(`${BACKEND_URL}/api/orders`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          Cookie: cookie.toString(),
         },
-        credentials: "include",
       });
 
       if (!res.ok) {
@@ -61,6 +61,7 @@ export const orderService = {
         };
       }
       const data = await res.json();
+      console.log(data);
       return {
         data: data,
         message: "Orders fetched successfully",
