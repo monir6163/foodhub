@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
-import "./lib/env"; // Ensure environment variables are loaded
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",
@@ -12,7 +9,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
   async rewrites() {
     return [
       {

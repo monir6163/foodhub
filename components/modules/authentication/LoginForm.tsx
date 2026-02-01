@@ -49,7 +49,6 @@ export function LoginForm({
         toast.success("Logged in successfully!", {
           id: toastId,
         });
-        console.log("user", data);
         router.push("/");
       } catch (error) {
         toast.error("An unexpected error occurred. Please try again.", {

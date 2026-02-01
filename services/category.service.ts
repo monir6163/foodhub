@@ -1,6 +1,4 @@
-import { env } from "@/lib/env";
-
-const BACKEND_URL = env.BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL as string;
 export const categoryService = {
   getCategories: async function () {
     try {
