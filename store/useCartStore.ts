@@ -8,6 +8,7 @@ export interface CartItem {
   image: string | null;
   quantity: number;
   isAvailable: boolean;
+  providerId?: string;
 }
 
 interface CartStore {

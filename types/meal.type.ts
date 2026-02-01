@@ -39,6 +39,7 @@ export interface MealType {
   dietary?: string[];
   mealType: string | null;
   spiceLevel: string | null;
+  providerId?: string;
 }
 
 export interface MealsClientPropsType {

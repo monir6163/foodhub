@@ -25,6 +25,7 @@ export function MealCard({ meal }: MealCardProps) {
       price: meal.price,
       image: meal.image,
       isAvailable: meal.isAvailable,
+      providerId: meal.providerId,
     });
     toast.success(`${meal.name} added to cart!`);
   };

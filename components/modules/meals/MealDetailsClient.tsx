@@ -13,6 +13,7 @@ interface MealDetailsClientProps {
     price: number;
     image: string | null;
     isAvailable: boolean;
+    providerId?: string;
   };
 }
 
@@ -38,6 +39,7 @@ export function MealDetailsClient({ meal }: MealDetailsClientProps) {
           price: meal.price,
           image: meal.image,
           isAvailable: meal.isAvailable,
+          providerId: meal.providerId,
         });
       }
       toast.success(`${meal.name} (x${quantity}) added to cart!`);

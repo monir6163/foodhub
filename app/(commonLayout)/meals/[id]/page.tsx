@@ -166,6 +166,7 @@ export default async function MealDetailsPage({
                 price: meal.price,
                 image: meal.image,
                 isAvailable: meal.isAvailable,
+                providerId: meal.providerId,
               }}
             />
           </div>

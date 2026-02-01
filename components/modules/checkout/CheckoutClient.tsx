@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { orderService } from "@/services/order.service";
 import { useCartStore } from "@/store/useCartStore";
 import {
   ArrowLeft,
@@ -93,34 +94,23 @@ export function CheckoutClient() {
     setIsProcessing(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Create order object
-      const order = {
+      // Prepare order data for backend
+      const orderData = {
+        providerId: items[0]?.providerId || "", // Use first item's provider
+        address: `${formData.address}, ${formData.city}${formData.zipCode ? ", " + formData.zipCode : ""}`,
         items: items.map((item) => ({
-          id: item.id,
-          name: item.name,
-          price: item.price,
+          mealId: item.id,
           quantity: item.quantity,
         })),
-        customer: {
-          name: formData.fullName,
-          phone: formData.phone,
-          email: formData.email,
-          address: formData.address,
-          city: formData.city,
-          zipCode: formData.zipCode,
-        },
-        notes: formData.notes,
-        paymentMethod: formData.paymentMethod,
-        subtotal,
-        deliveryFee,
-        total,
-        orderDate: new Date().toISOString(),
       };
 
-      console.log("Order placed:", order);
+      // Create order via API
+      const result = await orderService.createOrder(orderData);
+
+      if (!result.status) {
+        toast.error(result.message || "Failed to place order");
+        return;
+      }
 
       // Clear cart after successful order
       clearCart();
