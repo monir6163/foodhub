@@ -54,47 +54,46 @@ export function MealDetailsClient({ meal }: MealDetailsClientProps) {
   };
 
   return (
-    <div className="pt-4 space-y-4">
+    <div className="pt-4 space-y-4 ">
       {/* Quantity Selector */}
       <div className="flex items-center gap-4">
-        <span className="text-sm font-semibold">Quantity:</span>
-        <div className="flex items-center gap-2">
+        {/* <span className="text-sm font-semibold">Quantity:</span> */}
+        <div className="flex items-center gap-1">
           <Button
             variant="outline"
             size="icon"
             onClick={decrementQuantity}
             disabled={!meal.isAvailable || quantity <= 1}
-            className="h-10 w-10"
+            className="h-6 w-6"
           >
             <Minus className="h-4 w-4" />
           </Button>
-          <div className="w-16 text-center">
-            <span className="text-2xl font-bold">{quantity}</span>
+          <div className="w-5 text-center">
+            <span className="text-sm font-bold">{quantity}</span>
           </div>
           <Button
             variant="outline"
             size="icon"
             onClick={incrementQuantity}
             disabled={!meal.isAvailable || quantity >= 99}
-            className="h-10 w-10"
+            className="h-6 w-6"
           >
             <Plus className="h-4 w-4" />
           </Button>
         </div>
+        {/* Add to Cart Button */}
+        <Button
+          size="lg"
+          className=" gap-3 text-lg cursor-pointer"
+          disabled={!meal.isAvailable}
+          onClick={handleAddToCart}
+        >
+          <ShoppingCart className="w-5 h-5" />
+          {meal.isAvailable
+            ? `Add to Cart - $${(meal.price * quantity).toFixed(2)}`
+            : "Currently Unavailable"}
+        </Button>
       </div>
-
-      {/* Add to Cart Button */}
-      <Button
-        size="lg"
-        className="w-full gap-3 text-lg"
-        disabled={!meal.isAvailable}
-        onClick={handleAddToCart}
-      >
-        <ShoppingCart className="w-5 h-5" />
-        {meal.isAvailable
-          ? `Add to Cart - $${(meal.price * quantity).toFixed(2)}`
-          : "Currently Unavailable"}
-      </Button>
 
       {cartItem && (
         <p className="text-sm text-muted-foreground text-center">

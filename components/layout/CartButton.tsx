@@ -4,18 +4,25 @@ import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/useCartStore";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export function CartButton() {
-  const getTotalItems = useCartStore((state) => state.getTotalItems);
-  const totalItems = getTotalItems();
+  const [mounted, setMounted] = useState(false);
+  const items = useCartStore((state) => state.items);
+
+  const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Button variant="ghost" size="icon" className="relative" asChild>
       <Link href="/cart">
         <ShoppingCart className="h-5 w-5" />
-        {totalItems > 0 && (
-          <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center font-bold">
-            {totalItems > 99 ? "99+" : totalItems}
+        {mounted && totalItems > 0 && (
+          <span className="absolute -top-1 -right-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+            {totalItems}
           </span>
         )}
       </Link>

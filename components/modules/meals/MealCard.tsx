@@ -113,7 +113,7 @@ export function MealCard({ meal }: MealCardProps) {
             size="sm"
             disabled={!meal.isAvailable}
             onClick={handleAddToCart}
-            className="group-hover:bg-primary group-hover:text-primary-foreground transition-all"
+            className="group-hover:bg-primary cursor-pointer group-hover:text-primary-foreground transition-all"
           >
             <ShoppingCart className="h-4 w-4 mr-1" />
             Add to Cart
@@ -123,7 +123,7 @@ export function MealCard({ meal }: MealCardProps) {
           <Button
             variant="outline"
             size="sm"
-            className="w-full border-primary/50 hover:bg-primary/10"
+            className="w-full cursor-pointer border-primary/50 hover:bg-primary/10"
           >
             <Eye className="h-4 w-4 mr-2" />
             View Details
