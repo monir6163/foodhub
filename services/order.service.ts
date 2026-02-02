@@ -61,7 +61,7 @@ export const orderService = {
         };
       }
       const data = await res.json();
-      console.log(data);
+      console.log("data my orders", data);
       return {
         data: data,
         message: "Orders fetched successfully",

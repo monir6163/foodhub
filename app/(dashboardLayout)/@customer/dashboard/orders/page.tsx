@@ -1,5 +1,5 @@
 import { orderActions } from "@/actions/orders";
-import { OrdersClient } from "@/components/modules/orders/OrdersClient";
+import { MyOrders } from "@/components/modules/customer/myOrders";
 import { ShoppingBag } from "lucide-react";
 
 export default async function CustomerOrdersPage() {
@@ -22,7 +22,7 @@ export default async function CustomerOrdersPage() {
         </div>
       </div>
 
-      <OrdersClient orders={orders} />
+      <MyOrders orders={orders} />
     </div>
   );
 }
