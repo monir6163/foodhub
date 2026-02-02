@@ -170,4 +170,37 @@ export const orderService = {
       };
     }
   },
+
+  getAllOrdersAdmin: async function (cookie: any) {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/orders/all/orders`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookie.toString(),
+        },
+      });
+
+      if (!res.ok) {
+        return {
+          data: null,
+          message: "Failed to fetch all orders",
+          status: false,
+        };
+      }
+      const data = await res.json();
+      return {
+        data: data,
+        message: "All orders fetched successfully",
+        status: true,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        data: null,
+        message: "Failed to fetch all orders",
+        status: false,
+      };
+    }
+  },
 };

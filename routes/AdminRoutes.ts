@@ -10,12 +10,16 @@ export const AdminRoutes: Route[] = [
         isActive: true,
       },
       {
-        title: "Write Blog",
-        url: "/admin-dashboard/write-blog",
+        title: "Categories",
+        url: "/admin-dashboard/all-categories",
       },
       {
-        title: "Analytics",
-        url: "/admin-dashboard/analytics",
+        title: "All Users",
+        url: "/admin-dashboard/all-users",
+      },
+      {
+        title: "All Orders",
+        url: "/admin-dashboard/all-orders",
       },
     ],
   },

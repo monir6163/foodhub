@@ -79,6 +79,18 @@ export function ReviewDialog({
         }
       } else {
         toast.error(result.message || "Failed to submit review");
+
+        // If already reviewed, automatically skip to next meal
+        if (
+          result.message?.includes("already reviewed") &&
+          selectedMealIndex < orderItems.length - 1
+        ) {
+          setTimeout(() => {
+            setSelectedMealIndex(selectedMealIndex + 1);
+            setRating(0);
+            setComment("");
+          }, 1500);
+        }
       }
     } catch (error) {
       toast.error("Failed to submit review");

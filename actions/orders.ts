@@ -31,3 +31,9 @@ export const cancelOrder = async (orderId: string) => {
   const res = await orderService.cancelOrder(orderId, cookieStore.toString());
   return res;
 };
+
+export const getAllOrdersAdmin = async () => {
+  const cookieStore = await cookies();
+  const res = await orderService.getAllOrdersAdmin(cookieStore.toString());
+  return res;
+};
