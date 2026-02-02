@@ -155,3 +155,38 @@ export const getProviderReviews = async () => {
     };
   }
 };
+
+export const getPopularMeals = async () => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/meals/popular/list`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        data: null,
+        message: error.message || "Failed to fetch popular meals",
+        status: false,
+      };
+    }
+
+    const result = await response.json();
+    return {
+      data: result,
+      message: "Popular meals fetched successfully",
+      status: true,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      data: null,
+      message: "Failed to fetch popular meals",
+      status: false,
+    };
+  }
+};

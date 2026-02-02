@@ -2,6 +2,7 @@
 
 import { ArrowUp, Loader2, Menu } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,7 @@ export default function Navbar() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { data: session, isPending } = authClient.useSession();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,15 +69,22 @@ export default function Navbar() {
 
           {/* Middle - Nav Items (Desktop) */}
           <nav className="hidden md:flex items-center gap-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-600 after:transition-all hover:after:w-full"
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`transition-colors duration-200 text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-red-600 after:transition-all hover:after:w-full ${
+                    isActive
+                      ? "text-foreground after:w-full"
+                      : "text-muted-foreground after:w-0"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Right - Auth Buttons (Desktop) */}
@@ -118,16 +127,23 @@ export default function Navbar() {
                 <div className="flex flex-col gap-6 mt-6 px-4">
                   {/* Mobile Nav */}
                   <nav className="flex flex-col gap-4">
-                    {navItems.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        onClick={() => setIsSheetOpen(false)}
-                        className="text-muted-foreground hover:text-foreground transition-colors duration-200 text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-red-600 after:transition-all hover:after:w-full"
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
+                    {navItems.map((item) => {
+                      const isActive = pathname === item.href;
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          onClick={() => setIsSheetOpen(false)}
+                          className={`transition-colors duration-200 text-sm font-medium relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-red-600 after:transition-all hover:after:w-full ${
+                            isActive
+                              ? "text-foreground after:w-full"
+                              : "text-muted-foreground after:w-0"
+                          }`}
+                        >
+                          {item.name}
+                        </Link>
+                      );
+                    })}
                   </nav>
 
                   {/* Mobile Auth Buttons */}

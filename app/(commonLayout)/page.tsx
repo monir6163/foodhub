@@ -1,4 +1,5 @@
 import { categoryActions } from "@/actions/categories";
+import { getPopularMeals } from "@/actions/reviews";
 import { CategorySlider } from "@/components/modules/Home/CategorySlider";
 import HeroSection from "@/components/modules/Home/Hero";
 import { HowItWorks } from "@/components/modules/Home/HowItWorks";
@@ -8,15 +9,17 @@ import {
   CategorySliderSkeleton,
   PopularMealsSkeleton,
 } from "@/helper/skelitonLoader";
-import { demoMeals } from "@/lib/demo-data";
 import { Suspense } from "react";
 
 async function getHomeData() {
   try {
-    const [categoriesData] = await Promise.all([categoryActions()]);
+    const [categoriesData, popularMealsData] = await Promise.all([
+      categoryActions(),
+      getPopularMeals(),
+    ]);
     return {
       categories: categoriesData?.data?.data || [],
-      meals: demoMeals.slice(0, 6) || [],
+      meals: popularMealsData?.data?.data || [],
       error: null,
     };
   } catch (error) {
@@ -32,6 +35,8 @@ async function getHomeData() {
 export default async function Home() {
   const { categories, meals, error } = await getHomeData();
 
+  console.log(meals);
+
   return (
     <>
       <HeroSection />
@@ -39,7 +44,7 @@ export default async function Home() {
         <CategorySlider categories={categories} />
       </Suspense>
       <Suspense fallback={<PopularMealsSkeleton />}>
-        <PopularMeals meals={meals} />
+        <PopularMeals meals={meals?.data} />
       </Suspense>
       <HowItWorks />
       <OrderTracking />
