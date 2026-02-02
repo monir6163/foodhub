@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import heroImage from "../../../public/hero-food.jpg";
 
 export default function HeroSection() {
@@ -51,9 +52,15 @@ export default function HeroSection() {
                   size={20}
                 />
               </Button>
-              <Button variant="outline" size="lg" className="cursor-pointer">
-                Partner with Us
-              </Button>
+              <Link href={"/providers/become-provider"} passHref>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  Become a Provider
+                </Button>
+              </Link>
             </div>
 
             {/* Stats */}
