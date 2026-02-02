@@ -25,7 +25,7 @@ export function RegisterForm({
   ...props
 }: React.ComponentProps<"div">) {
   const [showPassword, setShowPassword] = React.useState(false);
-  const pathname = "/providers/become-provider";
+  const pathname = "/become-provider";
   const path = usePathname();
   const router = useRouter();
 

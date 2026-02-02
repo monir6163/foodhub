@@ -52,7 +52,7 @@ export default function HeroSection() {
                   size={20}
                 />
               </Button>
-              <Link href={"/providers/become-provider"} passHref>
+              <Link href={"/become-provider"} passHref>
                 <Button
                   variant="outline"
                   size="lg"

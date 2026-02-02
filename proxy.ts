@@ -56,5 +56,6 @@ export const config = {
     "/login",
     "/register",
     "/forgot-password",
+    "/become-provider",
   ],
 };

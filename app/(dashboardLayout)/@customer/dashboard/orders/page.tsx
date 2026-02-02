@@ -5,9 +5,6 @@ import { ShoppingBag } from "lucide-react";
 export default async function CustomerOrdersPage() {
   const ordersData = await orderActions();
   const orders = ordersData?.data?.data || [];
-
-  console.log("order", orders);
-
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
