@@ -8,8 +8,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { ROLES } from "@/constants/Roles";
@@ -17,8 +15,8 @@ import { AdminRoutes } from "@/routes/AdminRoutes";
 import { CustomerRoutes } from "@/routes/CustomerRoutes";
 import { ProviderRoutes } from "@/routes/ProviderRoutes";
 import { Route } from "@/types";
-import Link from "next/link";
 import { Separator } from "../ui/separator";
+import ActiveItemNav from "./ActiveItemNav";
 
 export function AppSidebar({
   user,
@@ -58,13 +56,7 @@ export function AppSidebar({
             <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {item.items.map((item: any) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
-                      <Link href={item.url}>{item.title}</Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
+                <ActiveItemNav items={item.items} />
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

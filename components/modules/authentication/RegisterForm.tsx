@@ -10,6 +10,7 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { defaultValues, RegisterFormSchema } from "@/schema/registerSchema";
 import { useForm } from "@tanstack/react-form";
@@ -30,14 +31,14 @@ export function RegisterForm({
     onSubmit: async ({ value }: { value: typeof defaultValues }) => {
       const toastId = toast.loading("Creating your account...");
       try {
-        // const { error } = await authClient.signUp.email(value);
-        // if (error) {
-        //   toast.error(error.message, { id: toastId });
-        //   return;
-        // }
-        // toast.success("Account created! Please check your email.", {
-        //   id: toastId,
-        // });
+        const { error } = await authClient.signUp.email(value);
+        if (error) {
+          toast.error(error.message, { id: toastId });
+          return;
+        }
+        toast.success("Account created! Please check your email.", {
+          id: toastId,
+        });
       } catch (error) {
         toast.error("An unexpected error occurred. Please try again.", {
           id: toastId,

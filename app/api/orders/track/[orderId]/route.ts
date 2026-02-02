@@ -5,11 +5,11 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { orderId: string } },
+  { params }: { params: Promise<{ orderId: string }> },
 ) {
   try {
     const cookieStore = await cookies();
-    const orderId = params.orderId;
+    const { orderId } = await params;
 
     if (!orderId) {
       return NextResponse.json(
