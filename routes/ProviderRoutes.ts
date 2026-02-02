@@ -6,20 +6,19 @@ export const ProviderRoutes: Route[] = [
     items: [
       {
         title: "Dashboard",
-        url: "/dashboard",
-        isActive: true,
+        url: "/provider-dashboard",
       },
       {
-        title: "Create Blog",
-        url: "/dashboard/create-blog",
+        title: "Create Shop",
+        url: "/provider-dashboard/create-shop",
       },
       {
-        title: "History Blogs",
-        url: "/dashboard/history-blogs",
+        title: "Meals",
+        url: "/provider-dashboard/meals",
       },
       {
-        title: "Analytics",
-        url: "/dashboard/analytics",
+        title: "My Orders",
+        url: "/provider-dashboard/my-orders",
       },
     ],
   },

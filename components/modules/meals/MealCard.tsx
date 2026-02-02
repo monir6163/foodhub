@@ -11,7 +11,6 @@ import {
 import { useCartStore } from "@/store/useCartStore";
 import { MealCardProps } from "@/types/meal.type";
 import { Clock, Eye, Flame, ShoppingCart, Utensils } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -35,12 +34,9 @@ export function MealCard({ meal }: MealCardProps) {
       <CardHeader className="p-0 relative">
         <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-primary/20 to-primary/5">
           {meal.image ? (
-            <Image
-              src={meal.image}
-              alt={meal.name}
-              fill
-              className="object-cover group-hover:scale-110 transition-transform duration-300"
-            />
+            <div className="flex items-center justify-center h-full">
+              <Utensils className="h-16 w-16 text-muted-foreground/30" />
+            </div>
           ) : (
             <div className="flex items-center justify-center h-full">
               <Utensils className="h-16 w-16 text-muted-foreground/30" />

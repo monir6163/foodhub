@@ -1,3 +1,5 @@
+import { getUserReviews } from "@/actions/reviews";
+import { CustomerReviews } from "@/components/modules/customer/CustomerReviews";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,6 +42,10 @@ export default async function DashboardPage() {
   const cookieStore = await cookies();
   const { data: ordersResponse } = await orderService.getMyOrders(cookieStore);
   const orders = ordersResponse?.data || [];
+
+  // Get user reviews
+  const { data: reviewsResponse } = await getUserReviews();
+  const reviews = reviewsResponse?.data || [];
 
   // Calculate statistics
   const stats: OrderStats = {
@@ -306,6 +312,9 @@ export default async function DashboardPage() {
                   <p className="text-sm text-muted-foreground">Total</p>
                 </div>
               </div>
+
+              {/* Customer Reviews */}
+              <CustomerReviews reviews={reviews} />
             </div>
           </CardContent>
         </Card>

@@ -21,6 +21,7 @@ import {
   Clock,
   Package,
   Search,
+  Star,
   Truck,
   XCircle,
 } from "lucide-react";
@@ -28,6 +29,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { OrderDetailsModal } from "./OrderDetailsModal";
+import { ReviewDialog } from "./ReviewDialog";
 
 interface OrderItem {
   id: string;
@@ -100,6 +102,8 @@ export function MyOrders({ orders }: OrdersClientProps) {
   const [orderToCancel, setOrderToCancel] = useState<Order | null>(null);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
+  const [orderToReview, setOrderToReview] = useState<Order | null>(null);
+  const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -146,6 +150,11 @@ export function MyOrders({ orders }: OrdersClientProps) {
   const handleCancelClick = (order: Order) => {
     setOrderToCancel(order);
     setIsCancelDialogOpen(true);
+  };
+
+  const handleReviewClick = (order: Order) => {
+    setOrderToReview(order);
+    setIsReviewDialogOpen(true);
   };
 
   const handleCancelOrder = async () => {
@@ -331,6 +340,16 @@ export function MyOrders({ orders }: OrdersClientProps) {
               >
                 View Details
               </Button>
+              {order.status === "DELIVERED" && (
+                <Button
+                  variant="default"
+                  className="cursor-pointer gap-2"
+                  onClick={() => handleReviewClick(order)}
+                >
+                  <Star className="w-4 h-4" />
+                  Leave Review
+                </Button>
+              )}
               {(order.status === "PENDING" || order.status === "CONFIRMED") && (
                 <Button
                   variant="destructive"
@@ -351,6 +370,19 @@ export function MyOrders({ orders }: OrdersClientProps) {
         onOpenChange={setIsModalOpen}
         order={selectedOrder}
       />
+
+      {/* Review Dialog */}
+      {orderToReview && (
+        <ReviewDialog
+          isOpen={isReviewDialogOpen}
+          onClose={() => {
+            setIsReviewDialogOpen(false);
+            setOrderToReview(null);
+          }}
+          orderItems={orderToReview.items || []}
+          orderId={orderToReview.id}
+        />
+      )}
 
       {/* Cancel Order Confirmation Dialog */}
       <AlertDialog

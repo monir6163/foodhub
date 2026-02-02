@@ -86,7 +86,11 @@ export const mealService = {
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "force-cache",
+        next: {
+          // Revalidate every 1 minute
+          revalidate: 60,
+          tags: ["meal-types"],
+        },
       });
 
       if (!res.ok) {
@@ -107,7 +111,11 @@ export const mealService = {
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "force-cache",
+        next: {
+          // Revalidate every 1 minute
+          revalidate: 60,
+          tags: ["dietary-options"],
+        },
       });
 
       if (!res.ok) {
@@ -128,7 +136,11 @@ export const mealService = {
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "force-cache",
+        next: {
+          // Revalidate every 1 minute
+          revalidate: 60,
+          tags: ["cuisine-options"],
+        },
       });
 
       if (!res.ok) {
