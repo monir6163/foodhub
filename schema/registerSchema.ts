@@ -7,7 +7,7 @@ const RegisterFormSchema = z.object({
     ["customer", "provider"],
     "Role must be either customer or provider",
   ),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
 type RegisterFormType = z.infer<typeof RegisterFormSchema>;

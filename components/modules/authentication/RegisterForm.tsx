@@ -157,7 +157,9 @@ export function RegisterForm({
               />
 
               <Button type="submit" className="w-full">
-                Create Account
+                {path === pathname
+                  ? "Create a Provider Account"
+                  : "Create your account"}
               </Button>
 
               {path !== pathname && (
