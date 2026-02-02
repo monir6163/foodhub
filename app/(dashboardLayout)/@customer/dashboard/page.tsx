@@ -159,7 +159,7 @@ export default async function DashboardPage() {
                 <CardDescription>Your latest meal orders</CardDescription>
               </div>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/orders">
+                <Link href="/dashboard/orders">
                   View All
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
@@ -206,7 +206,7 @@ export default async function DashboardPage() {
                       </div>
                     </div>
                     <Button asChild variant="ghost" size="sm">
-                      <Link href={`/orders`}>View</Link>
+                      <Link href={`/dashboard/orders`}>View</Link>
                     </Button>
                   </div>
                 ))}
