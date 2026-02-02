@@ -10,6 +10,8 @@ import {
   PopularMealsSkeleton,
 } from "@/helper/skelitonLoader";
 import { Suspense } from "react";
+export const dynamic = "auto";
+export const revalidate = 0;
 
 async function getHomeData() {
   try {
@@ -34,8 +36,6 @@ async function getHomeData() {
 
 export default async function Home() {
   const { categories, meals, error } = await getHomeData();
-
-  console.log(meals);
 
   return (
     <>

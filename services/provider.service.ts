@@ -7,11 +7,7 @@ export const providerService = {
         headers: {
           "Content-Type": "application/json",
         },
-        next: {
-          // Revalidate every 1 minute
-          revalidate: 60,
-          tags: ["providers-list"],
-        },
+        cache: "no-store",
       });
 
       if (!res.ok) {
@@ -22,7 +18,6 @@ export const providerService = {
         };
       }
       const data = await res.json();
-      console.log(data);
       return { data: data, error: null, status: true };
     } catch (error) {
       console.log(error);
@@ -51,7 +46,6 @@ export const providerService = {
         };
       }
       const data = await res.json();
-      console.log("data", data);
       return { data: data, error: null, status: true };
     } catch (error) {
       console.log(error);

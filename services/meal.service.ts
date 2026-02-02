@@ -67,7 +67,6 @@ export const mealService = {
         };
       }
       const data = await res.json();
-      console.log("data", data);
       return { data: data, error: null, status: true };
     } catch (error) {
       console.log(error);
@@ -86,11 +85,7 @@ export const mealService = {
         headers: {
           "Content-Type": "application/json",
         },
-        next: {
-          // Revalidate every 1 minute
-          revalidate: 60,
-          tags: ["meal-types"],
-        },
+        cache: "no-store",
       });
 
       if (!res.ok) {
@@ -111,11 +106,7 @@ export const mealService = {
         headers: {
           "Content-Type": "application/json",
         },
-        next: {
-          // Revalidate every 1 minute
-          revalidate: 60,
-          tags: ["dietary-options"],
-        },
+        cache: "no-store",
       });
 
       if (!res.ok) {
@@ -136,11 +127,7 @@ export const mealService = {
         headers: {
           "Content-Type": "application/json",
         },
-        next: {
-          // Revalidate every 1 minute
-          revalidate: 60,
-          tags: ["cuisine-options"],
-        },
+        cache: "no-store",
       });
 
       if (!res.ok) {

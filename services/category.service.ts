@@ -7,11 +7,7 @@ export const categoryService = {
         headers: {
           "Content-Type": "application/json",
         },
-        next: {
-          // Revalidate every 1 minute
-          revalidate: 60,
-          tags: ["categories"],
-        },
+        cache: "no-store",
       });
 
       if (!res.ok) {
