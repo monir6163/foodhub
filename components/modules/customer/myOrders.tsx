@@ -1,7 +1,19 @@
 "use client";
 
+import { cancelOrder } from "@/actions/orders";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -14,11 +26,13 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
+import { OrderDetailsModal } from "./OrderDetailsModal";
 
 interface OrderItem {
   id: string;
   mealId: string;
-  orderId: string;
+  orderNumber: string;
   quantity: number;
   price: number;
   meal: {
@@ -31,6 +45,7 @@ interface OrderItem {
 interface Order {
   items: any;
   id: string;
+  orderNumber: string;
   userId: string;
   providerId: string;
   address: string;
@@ -80,6 +95,11 @@ const statusConfig = {
 
 export function MyOrders({ orders }: OrdersClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [orderToCancel, setOrderToCancel] = useState<Order | null>(null);
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -106,11 +126,51 @@ export function MyOrders({ orders }: OrdersClientProps) {
 
     const query = searchQuery.toLowerCase().trim();
     return orders.filter((order) => {
-      const orderId = order.id.toLowerCase();
-      const shortOrderId = order.id.slice(-8).toLowerCase();
-      return orderId.includes(query) || shortOrderId.includes(query);
+      const orderId = order.id?.toLowerCase() || "";
+      const orderNumber = order.orderNumber?.toLowerCase() || "";
+      const shortOrderId = order.id?.slice(-8).toLowerCase() || "";
+
+      return (
+        orderId.includes(query) ||
+        orderNumber.includes(query) ||
+        shortOrderId.includes(query)
+      );
     });
   }, [orders, searchQuery]);
+
+  const handleViewDetails = (order: Order) => {
+    setSelectedOrder(order);
+    setIsModalOpen(true);
+  };
+
+  const handleCancelClick = (order: Order) => {
+    setOrderToCancel(order);
+    setIsCancelDialogOpen(true);
+  };
+
+  const handleCancelOrder = async () => {
+    if (!orderToCancel) return;
+
+    setIsCancelling(true);
+    try {
+      const result = await cancelOrder(orderToCancel.id);
+
+      if (result.status) {
+        toast.success("Order cancelled successfully");
+        setIsCancelDialogOpen(false);
+        setOrderToCancel(null);
+        // Refresh the page to show updated order status
+        window.location.reload();
+      } else {
+        toast.error(result.message || "Failed to cancel order");
+      }
+    } catch (error) {
+      console.error("Error cancelling order:", error);
+      toast.error("Failed to cancel order. Please try again.");
+    } finally {
+      setIsCancelling(false);
+    }
+  };
 
   if (orders.length === 0) {
     return (
@@ -168,7 +228,7 @@ export function MyOrders({ orders }: OrdersClientProps) {
                 <div className="space-y-1">
                   <div className="flex items-center gap-3">
                     <h3 className="font-semibold text-lg">
-                      Order #{order.id.slice(-8).toUpperCase()}
+                      Order #{order?.orderNumber}
                     </h3>
                     <Badge variant="outline" className={status.className}>
                       <StatusIcon className="w-3 h-3 mr-1" />
@@ -263,9 +323,62 @@ export function MyOrders({ orders }: OrdersClientProps) {
                 </div>
               </div>
             </CardContent>
+            <CardFooter className="flex justify-end gap-3 bg-muted/50 px-6 py-4">
+              <Button
+                variant="outline"
+                className="cursor-pointer"
+                onClick={() => handleViewDetails(order)}
+              >
+                View Details
+              </Button>
+              {(order.status === "PENDING" || order.status === "CONFIRMED") && (
+                <Button
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onClick={() => handleCancelClick(order)}
+                >
+                  Cancel Order
+                </Button>
+              )}
+            </CardFooter>
           </Card>
         );
       })}
+
+      {/* Order Details Modal */}
+      <OrderDetailsModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        order={selectedOrder}
+      />
+
+      {/* Cancel Order Confirmation Dialog */}
+      <AlertDialog
+        open={isCancelDialogOpen}
+        onOpenChange={setIsCancelDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel Order</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to cancel order #
+              {orderToCancel?.orderNumber}? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isCancelling}>
+              No, Keep Order
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleCancelOrder}
+              disabled={isCancelling}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isCancelling ? "Cancelling..." : "Yes, Cancel Order"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

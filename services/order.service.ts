@@ -76,4 +76,98 @@ export const orderService = {
       };
     }
   },
+
+  getOrderDetails: async function (orderId: string, cookie: any) {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/orders/${orderId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookie.toString(),
+        },
+      });
+
+      if (!res.ok) {
+        return {
+          data: null,
+          message: "Failed to fetch order details",
+          status: false,
+        };
+      }
+      const data = await res.json();
+      return {
+        data: data,
+        message: "Order details fetched successfully",
+        status: true,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        data: null,
+        message: "Failed to fetch order details",
+        status: false,
+      };
+    }
+  },
+
+  orderStatusTracking: async function (orderId: string, cookie: any) {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/orders/track/${orderId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookie.toString(),
+        },
+      });
+
+      const data = await res.json();
+      return {
+        data: data,
+        message: "Order status fetched successfully",
+        status: true,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        data: null,
+        message: "Failed to fetch order status",
+        status: false,
+      };
+    }
+  },
+
+  cancelOrder: async function (orderId: string, cookie: any) {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/orders/cancel/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookie.toString(),
+        },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        return {
+          data: null,
+          message: errorData.message || "Failed to cancel order",
+          status: false,
+        };
+      }
+
+      const data = await res.json();
+      return {
+        data: data,
+        message: "Order cancelled successfully",
+        status: true,
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        data: null,
+        message: "Failed to cancel order",
+        status: false,
+      };
+    }
+  },
 };

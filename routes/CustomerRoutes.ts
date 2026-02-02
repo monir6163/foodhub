@@ -19,6 +19,11 @@ export const CustomerRoutes: Route[] = [
         url: "/dashboard/profile",
         isActive: false,
       },
+      {
+        title: "Track Order",
+        url: "/dashboard/track",
+        isActive: false,
+      },
     ],
   },
 ];
