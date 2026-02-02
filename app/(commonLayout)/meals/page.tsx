@@ -69,8 +69,6 @@ export default async function MealsPage({
       mealService.getMealTypes(),
     ]);
 
-  console.log(pagination);
-
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20">
       <MealsHero />
