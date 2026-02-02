@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState, useTransition } from "react";
 import { MealCard } from "./MealCard";
 import { FilterValues, MealFilters } from "./MealFilters";
-import { Pagination } from "./Pagination";
+import PaginationControls from "./Pagination";
 
 export function MealsClient({
   initialMeals,
@@ -128,20 +128,6 @@ export function MealsClient({
             />
           </div>
 
-          {/* Results Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold">
-                {initialMeals.length === 0
-                  ? "No meals found"
-                  : `${initialMeals.length} Meal${initialMeals.length !== 1 ? "s" : ""} Available`}
-              </h2>
-              <p className="text-muted-foreground text-sm mt-1">
-                Page {initialPagination.page} of {initialPagination.totalPages}
-              </p>
-            </div>
-          </div>
-
           {/* Meals Grid */}
           {initialMeals.length === 0 ? (
             <div className="text-center py-20">
@@ -162,11 +148,7 @@ export function MealsClient({
               </div>
 
               {/* Pagination */}
-              <Pagination
-                currentPage={initialPagination.page}
-                totalPages={initialPagination.totalPages}
-                onPageChange={handlePageChange}
-              />
+              <PaginationControls meta={initialPagination} />
             </>
           )}
         </main>

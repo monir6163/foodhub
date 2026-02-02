@@ -7,97 +7,86 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
+interface PaginationControlsProps {
+  meta: {
+    limit: number;
+    page: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
-export function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: PaginationProps) {
-  const pages = [];
-  const maxVisiblePages = 5;
+export default function PaginationControls({ meta }: PaginationControlsProps) {
+  const { limit: pageSize, page: currentPage, total, totalPages } = meta;
 
-  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  if (endPage - startPage < maxVisiblePages - 1) {
-    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-  }
+  const navigateToPage = (page: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
+    router.push(`?${params.toString()}`);
+    // router.push("/dashboard/create-blogs"); // Example
+    console.log(params);
+  };
 
-  for (let i = startPage; i <= endPage; i++) {
-    pages.push(i);
-  }
+  //* Showing 1 to 10 of 21 -> page 1
+  //* Showing 11 to 20 of 21 -> page 2
 
-  if (totalPages <= 1) return null;
+  const start = (currentPage - 1) * pageSize + 1;
+  const end = Math.min(currentPage * pageSize, total);
 
   return (
-    <div className="flex items-center justify-center gap-2 mt-8">
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(1)}
-        disabled={currentPage === 1}
-      >
-        <ChevronsLeft className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        <ChevronLeft className="h-4 w-4" />
-      </Button>
+    <div className="flex items-center justify-between px-2 py-4 border-t mt-4">
+      <div className="text-sm text-muted-foreground">
+        Showing {start} to {end} of {total} results
+      </div>
 
-      {startPage > 1 && (
-        <>
-          <Button variant="outline" onClick={() => onPageChange(1)}>
-            1
-          </Button>
-          {startPage > 2 && <span className="px-2">...</span>}
-        </>
-      )}
-
-      {pages.map((page) => (
+      <div className="flex items-center space-x-2">
         <Button
-          key={page}
-          variant={currentPage === page ? "default" : "outline"}
-          onClick={() => onPageChange(page)}
+          variant="outline"
+          size="icon"
+          onClick={() => navigateToPage(1)}
+          disabled={currentPage === 1}
         >
-          {page}
+          <ChevronsLeft className="h-4 w-4" />
         </Button>
-      ))}
 
-      {endPage < totalPages && (
-        <>
-          {endPage < totalPages - 1 && <span className="px-2">...</span>}
-          <Button variant="outline" onClick={() => onPageChange(totalPages)}>
-            {totalPages}
-          </Button>
-        </>
-      )}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => navigateToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
 
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        <ChevronRight className="h-4 w-4" />
-      </Button>
-      <Button
-        variant="outline"
-        size="icon"
-        onClick={() => onPageChange(totalPages)}
-        disabled={currentPage === totalPages}
-      >
-        <ChevronsRight className="h-4 w-4" />
-      </Button>
+        <div className="flex items-center gap-1">
+          <span className="text-sm font-medium">
+            Page {currentPage} of {totalPages}
+          </span>
+        </div>
+
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => navigateToPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => navigateToPage(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          <ChevronsRight className="h-4 w-4" />
+        </Button>
+      </div>
     </div>
   );
 }
