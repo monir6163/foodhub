@@ -2,9 +2,18 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, Clock, Package, Truck, XCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock,
+  Package,
+  Search,
+  Truck,
+  XCircle,
+} from "lucide-react";
 import Image from "next/image";
+import { useMemo, useState } from "react";
 
 interface OrderItem {
   id: string;
@@ -70,6 +79,8 @@ const statusConfig = {
 };
 
 export function MyOrders({ orders }: OrdersClientProps) {
+  const [searchQuery, setSearchQuery] = useState("");
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -86,6 +97,20 @@ export function MyOrders({ orders }: OrdersClientProps) {
       currency: "USD",
     }).format(price);
   };
+
+  // Filter orders based on search query
+  const filteredOrders = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return orders;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    return orders.filter((order) => {
+      const orderId = order.id.toLowerCase();
+      const shortOrderId = order.id.slice(-8).toLowerCase();
+      return orderId.includes(query) || shortOrderId.includes(query);
+    });
+  }, [orders, searchQuery]);
 
   if (orders.length === 0) {
     return (
@@ -104,7 +129,33 @@ export function MyOrders({ orders }: OrdersClientProps) {
 
   return (
     <div className="space-y-6">
-      {orders?.map((order) => {
+      {/* Search Bar */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="text"
+          placeholder="Search by Order ID..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10"
+        />
+      </div>
+
+      {/* No Results Message */}
+      {filteredOrders.length === 0 && searchQuery && (
+        <div className="flex flex-col items-center justify-center py-12 px-4">
+          <div className="w-16 h-16 mb-4 rounded-full bg-muted flex items-center justify-center">
+            <Search className="w-8 h-8 text-muted-foreground" />
+          </div>
+          <h3 className="text-lg font-semibold mb-2">No orders found</h3>
+          <p className="text-muted-foreground text-center max-w-md">
+            No orders match &quot;{searchQuery}&quot;. Try a different Order ID.
+          </p>
+        </div>
+      )}
+
+      {/* Orders List */}
+      {filteredOrders?.map((order) => {
         const status =
           statusConfig[order.status as keyof typeof statusConfig] ||
           statusConfig.PENDING;
