@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { authClient } from "@/lib/auth-client";
 import { orderService } from "@/services/order.service";
 import { useCartStore } from "@/store/useCartStore";
 import {
@@ -29,11 +30,13 @@ export function CheckoutClient() {
   const router = useRouter();
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
+  const session = authClient.useSession();
+  const userData = session?.data?.user || null;
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    fullName: userData?.name || "",
     phone: "",
-    email: "",
+    email: userData?.email || "",
     address: "",
     city: "",
     zipCode: "",
@@ -159,6 +162,7 @@ export function CheckoutClient() {
                         Full Name <span className="text-destructive">*</span>
                       </Label>
                       <Input
+                        disabled
                         id="fullName"
                         name="fullName"
                         placeholder="John Doe"
@@ -186,6 +190,7 @@ export function CheckoutClient() {
                   <div className="space-y-2">
                     <Label htmlFor="email">Email (Optional)</Label>
                     <Input
+                      disabled
                       id="email"
                       name="email"
                       type="email"

@@ -42,7 +42,7 @@ export default function OrderSuccessPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-linear-to-b from-background via-background to-muted/20 flex items-center justify-center px-4 py-12">
       <div className="max-w-2xl w-full">
         <Card className="border-2 border-green-500/20 shadow-2xl">
           <CardHeader className="text-center pb-8 pt-12">
@@ -118,7 +118,7 @@ export default function OrderSuccessPage() {
             <div className="text-center text-sm text-muted-foreground pt-4">
               <p>
                 Need help?{" "}
-                <Link href="/support" className="text-primary hover:underline">
+                <Link href="/" className="text-primary hover:underline">
                   Contact Support
                 </Link>
               </p>
