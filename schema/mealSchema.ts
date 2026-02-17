@@ -16,10 +16,7 @@ const mealFormSchema = z.object({
     .min(0, "Calories cannot be negative")
     .max(5000, "Calories value is too high"),
   ingredients: z.array(z.string()).min(1, "Add at least one ingredient"),
-  description: z
-    .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(500, "Description is too long"),
+  description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().optional(),
   isAvailable: z.boolean(),
   mealType: z.string().min(1, "Meal type is required"),

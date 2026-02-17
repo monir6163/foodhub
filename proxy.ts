@@ -57,5 +57,6 @@ export const config = {
     "/register",
     "/forgot-password",
     "/become-provider",
+    "/orders/:path*",
   ],
 };

@@ -1,22 +1,25 @@
 const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 export const orderService = {
-  createOrder: async function (orderData: {
-    providerId: string;
-    address: string;
-    items: {
-      mealId: string;
-      quantity: number;
-    }[];
-  }) {
+  createOrder: async function (
+    orderData: {
+      providerId: string;
+      address: string;
+      items: {
+        mealId: string;
+        quantity: number;
+      }[];
+    },
+    cookie: any,
+  ) {
     try {
       const res = await fetch(`${BACKEND_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Cookie: cookie.toString(),
         },
         body: JSON.stringify(orderData),
-        credentials: "include",
       });
 
       if (!res.ok) {
@@ -61,7 +64,6 @@ export const orderService = {
         };
       }
       const data = await res.json();
-      console.log("data my orders", data);
       return {
         data: data,
         message: "Orders fetched successfully",

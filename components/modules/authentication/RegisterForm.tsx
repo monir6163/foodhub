@@ -163,6 +163,17 @@ export function RegisterForm({
                   ? "Create a Provider Account"
                   : "Create your account"}
               </Button>
+              {path !== pathname && (
+                <FieldDescription className="text-center text-red-600">
+                  Become a provider{" "}
+                  <Link
+                    href="/become-provider"
+                    className="text-primary hover:underline"
+                  >
+                    Click here
+                  </Link>
+                </FieldDescription>
+              )}
               <FieldDescription className="text-center">
                 Already have an account?{" "}
                 <Link href="/login" className="text-primary hover:underline">

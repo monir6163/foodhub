@@ -1,5 +1,6 @@
 "use client";
 
+import { createOrder } from "@/actions/orders";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,8 +8,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { authClient } from "@/lib/auth-client";
-import { orderService } from "@/services/order.service";
 import { useCartStore } from "@/store/useCartStore";
 import {
   ArrowLeft,
@@ -24,22 +23,22 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export function CheckoutClient() {
+export function CheckoutClient({
+  user,
+}: {
+  user: { name: string; email: string } | null;
+}) {
   const [mounted, setMounted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
-  const session = authClient.useSession();
-  const userData = session?.data?.user || null;
 
   const [formData, setFormData] = useState({
-    fullName: userData?.name || "",
+    fullName: user?.name || "",
     phone: "",
-    email: userData?.email || "",
+    email: user?.email || "",
     address: "",
-    city: "",
-    zipCode: "",
     notes: "",
     paymentMethod: "cod",
   });
@@ -84,12 +83,7 @@ export function CheckoutClient() {
     e.preventDefault();
 
     // Validation
-    if (
-      !formData.fullName ||
-      !formData.phone ||
-      !formData.address ||
-      !formData.city
-    ) {
+    if (!formData.fullName || !formData.phone || !formData.address) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -100,7 +94,7 @@ export function CheckoutClient() {
       // Prepare order data for backend
       const orderData = {
         providerId: items[0]?.providerId || "", // Use first item's provider
-        address: `${formData.address}, ${formData.city}${formData.zipCode ? ", " + formData.zipCode : ""}`,
+        address: formData.address,
         items: items.map((item) => ({
           mealId: item.id,
           quantity: item.quantity,
@@ -108,9 +102,8 @@ export function CheckoutClient() {
       };
 
       // Create order via API
-      const result = await orderService.createOrder(orderData);
-
-      if (!result.status) {
+      const result = await createOrder(orderData);
+      if (!result.data?.success) {
         toast.error(result.message || "Failed to place order");
         return;
       }
@@ -179,7 +172,7 @@ export function CheckoutClient() {
                         id="phone"
                         name="phone"
                         type="tel"
-                        placeholder="+1 234 567 8900"
+                        placeholder="01747706163"
                         value={formData.phone}
                         onChange={handleInputChange}
                         required
@@ -188,7 +181,7 @@ export function CheckoutClient() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email (Optional)</Label>
+                    <Label htmlFor="email">Email</Label>
                     <Input
                       disabled
                       id="email"
@@ -202,53 +195,27 @@ export function CheckoutClient() {
 
                   <div className="space-y-2">
                     <Label htmlFor="address">
-                      Street Address <span className="text-destructive">*</span>
+                      Full Address <span className="text-destructive">*</span>
                     </Label>
-                    <Input
+                    <Textarea
                       id="address"
                       name="address"
-                      placeholder="123 Main Street, Apartment 4B"
+                      placeholder="Enter your complete delivery address (Street, City, ZIP Code)..."
                       value={formData.address}
                       onChange={handleInputChange}
                       required
+                      rows={4}
                     />
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="city">
-                        City <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="city"
-                        name="city"
-                        placeholder="New York"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="zipCode">ZIP Code</Label>
-                      <Input
-                        id="zipCode"
-                        name="zipCode"
-                        placeholder="10001"
-                        value={formData.zipCode}
-                        onChange={handleInputChange}
-                      />
-                    </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="notes">Delivery Notes (Optional)</Label>
-                    <Textarea
+                    <Input
                       id="notes"
                       name="notes"
-                      placeholder="Add any special instructions for delivery..."
+                      placeholder="e.g., Leave at the doorstep"
                       value={formData.notes}
                       onChange={handleInputChange}
-                      rows={3}
                     />
                   </div>
                 </CardContent>

@@ -40,23 +40,25 @@ export default function HeroSection() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-up opacity-0 stagger-4">
-              <Button
-                className="flex items-center gap-2 cursor-pointer"
-                size="lg"
-                variant="destructive"
-                type="button"
-              >
-                Browse Restaurants
-                <ArrowRight
-                  className="transition-transform group-hover:translate-x-1"
-                  size={20}
-                />
-              </Button>
+              <Link href={"/meals"} passHref>
+                <Button
+                  className="flex items-center gap-2 cursor-pointer w-full"
+                  size="lg"
+                  variant="destructive"
+                  type="button"
+                >
+                  Browse Meals
+                  <ArrowRight
+                    className="transition-transform group-hover:translate-x-1"
+                    size={20}
+                  />
+                </Button>
+              </Link>
               <Link href={"/become-provider"} passHref>
                 <Button
                   variant="outline"
                   size="lg"
-                  className="flex items-center gap-2 cursor-pointer"
+                  className="flex items-center gap-2 cursor-pointer w-full"
                 >
                   Become a Provider
                 </Button>

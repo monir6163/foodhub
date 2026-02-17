@@ -14,8 +14,8 @@ import {
   Flame,
   ShoppingCart,
   Star,
+  Utensils,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 interface Meal {
@@ -73,16 +73,12 @@ export function PopularMeals({ meals }: ProviderMealsGridProps) {
             <CardHeader className="p-0 relative">
               <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-primary/20 to-primary/5">
                 {meal.image ? (
-                  <Image
-                    src={meal.image}
-                    alt={meal.name}
-                    width={400}
-                    height={192}
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
+                  <div className="flex items-center justify-center h-full">
+                    <Utensils className="h-16 w-16 text-muted-foreground/30" />
+                  </div>
                 ) : (
                   <div className="flex items-center justify-center h-full">
-                    <ShoppingCart className="h-16 w-16 text-muted-foreground/30" />
+                    <Utensils className="h-16 w-16 text-muted-foreground/30" />
                   </div>
                 )}
 

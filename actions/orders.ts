@@ -8,6 +8,19 @@ export const orderActions = async () => {
   return res;
 };
 
+export const createOrder = async (orderData: {
+  providerId: string;
+  address: string;
+  items: {
+    mealId: string;
+    quantity: number;
+  }[];
+}) => {
+  const cookieStore = await cookies();
+  const res = await orderService.createOrder(orderData, cookieStore.toString());
+  return res;
+};
+
 export const orderStatusTracking = async (orderId: string) => {
   const cookieStore = await cookies();
   const res = await orderService.orderStatusTracking(

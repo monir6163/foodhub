@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { defaultValues, mealFormSchema } from "@/schema/mealSchema";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
 
@@ -33,38 +34,39 @@ export default function AddMealForm({
   categories,
   ...props
 }: AddMealFormProps) {
+  const router = useRouter();
   const form = useForm({
     defaultValues: defaultValues,
     validators: { onSubmit: mealFormSchema },
     onSubmit: async ({ value }: { value: typeof defaultValues }) => {
       const toastId = toast.loading("Creating your meal...");
-      const payload = {
-        name: value.name,
-        cuisine: value.cuisine,
-        dietary: value.dietary,
-        price: value.price,
-        calories: value.calories,
-        ingredients: value.ingredients,
-        description: value.description,
-        image: value.image || undefined,
-        isAvailable: value.isAvailable,
-        mealType: value.mealType,
-        spiceLevel: value.spiceLevel,
-        categoryId: value.categoryId,
-      };
-
-      const res = await createMealProvider(payload);
-      if (res?.data?.success) {
-        toast.success(res.data?.message || "Meal created successfully", {
-          id: toastId,
-        });
-      } else {
-        toast.error(res?.message || "Failed to create meal", {
-          id: toastId,
-        });
-      }
-
       try {
+        const payload = {
+          name: value.name,
+          cuisine: value.cuisine,
+          dietary: value.dietary,
+          price: value.price,
+          calories: value.calories,
+          ingredients: value.ingredients,
+          description: value.description,
+          image: value.image || undefined,
+          isAvailable: value.isAvailable,
+          mealType: value.mealType,
+          spiceLevel: value.spiceLevel,
+          categoryId: value.categoryId,
+        };
+
+        const res = await createMealProvider(payload);
+        if (res?.data?.success) {
+          toast.success(res.data?.message || "Meal created successfully", {
+            id: toastId,
+          });
+          router.push("/provider-dashboard/meals");
+        } else {
+          toast.error(res?.message || "Failed to create meal", {
+            id: toastId,
+          });
+        }
       } catch (error) {
         toast.error("An unexpected error occurred. Please try again.", {
           id: toastId,
