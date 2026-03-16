@@ -10,8 +10,7 @@ import {
   PopularMealsSkeleton,
 } from "@/helper/skelitonLoader";
 import { Suspense } from "react";
-export const dynamic = "auto";
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 async function getHomeData() {
   try {

@@ -3,8 +3,7 @@ import { ProvidersClient } from "@/components/modules/providers/ProvidersClient"
 import { ProvidersHero } from "@/components/modules/providers/ProvidersHero";
 import { ProvidersLoadingSkeleton } from "@/components/modules/providers/ProvidersLoadingSkeleton";
 import { Suspense } from "react";
-export const dynamic = "auto";
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default async function ProvidersPage() {
   const providers = await providerActions();

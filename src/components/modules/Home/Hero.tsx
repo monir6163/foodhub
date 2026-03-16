@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import heroImage from "../../../public/hero-food.jpg";
 
 export default function HeroSection() {
   return (
@@ -96,7 +95,7 @@ export default function HeroSection() {
               <Image
                 width={600}
                 height={600}
-                src={heroImage}
+                src="/hero-food.jpg"
                 alt="Delicious food spread"
                 className="w-full h-full object-cover rounded-3xl shadow-2xl"
               />

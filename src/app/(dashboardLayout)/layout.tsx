@@ -16,8 +16,7 @@ import {
 import { ROLES } from "@/constants/Roles";
 import { userService } from "@/services/user.service";
 import Link from "next/link";
-export const dynamic = "auto";
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 export default async function DashboardLayout({
   admin,
   customer,

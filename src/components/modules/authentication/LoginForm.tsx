@@ -60,10 +60,10 @@ export function LoginForm({
   });
 
   const handleGoogleLogin = async () => {
-    // const data = await authClient.signIn.social({
-    //   provider: "google",
-    //   callbackURL: "http://localhost:3000",
-    // });
+    const data = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL!,
+    });
   };
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -147,6 +147,14 @@ export function LoginForm({
               </Button>
 
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card"></FieldSeparator>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={handleGoogleLogin}
+              >
+                Continue with Google
+              </Button>
               <FieldDescription className="text-center">
                 Don't have an account?{" "}
                 <Link href="/register" className="text-primary hover:underline">
