@@ -9,6 +9,7 @@ async function getMeals(searchParams: SearchParamsType) {
       page: searchParams.page ? parseInt(searchParams.page) : 1,
       limit: 9,
       search: searchParams.search,
+      category: searchParams.category,
       cuisine:
         searchParams.cuisine !== "All" ? searchParams.cuisine : undefined,
       dietary: searchParams.dietary,

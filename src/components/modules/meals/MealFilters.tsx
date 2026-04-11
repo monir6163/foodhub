@@ -20,6 +20,7 @@ interface MealFiltersProps {
 }
 
 export interface FilterValues {
+  category?: string;
   cuisine: string;
   dietary: string[];
   mealType: string;
@@ -88,6 +89,7 @@ export function MealFilters({
   const handleClearFilters = () => {
     onClearSearch();
     onFilterChange({
+      category: undefined,
       cuisine: "All",
       dietary: [],
       mealType: "All",
@@ -99,6 +101,7 @@ export function MealFilters({
   };
 
   const hasActiveFilters =
+    !!filters.category ||
     filters.cuisine !== "All" ||
     filters.dietary.length > 0 ||
     filters.mealType !== "All" ||

@@ -1,6 +1,7 @@
 export interface SearchParamsType {
   page?: string;
   search?: string;
+  category?: string;
   cuisine?: string;
   dietary?: string;
   mealType?: string;

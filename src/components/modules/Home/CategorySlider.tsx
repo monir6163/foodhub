@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
 export function CategorySlider({
@@ -80,34 +81,36 @@ export function CategorySlider({
               key={index}
               className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
             >
-              <div className="group cursor-pointer">
-                <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 py-0">
-                  <CardContent className="p-0 relative aspect-square">
-                    {/* Image Container */}
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={
-                          category?.image || getCategoryImage(category?.name)
-                        }
-                        alt={category?.name || "Category"}
-                        className="object-cover transition-transform duration-300 group-hover:scale-110"
-                        width={400}
-                        height={400}
-                      />
+              <Link href={`/meals?category=${category.slug || category.id}`}>
+                <div className="group cursor-pointer">
+                  <Card className="overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 py-0">
+                    <CardContent className="p-0 relative aspect-square">
+                      {/* Image Container */}
+                      <div className="relative w-full h-full">
+                        <Image
+                          src={
+                            category?.image || getCategoryImage(category?.name)
+                          }
+                          alt={category?.name || "Category"}
+                          className="object-cover transition-transform duration-300 group-hover:scale-110"
+                          width={400}
+                          height={400}
+                        />
 
-                      {/* Gradient Overlay */}
-                      <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-transparent group-hover:from-black/90 transition-all duration-300" />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/40 to-transparent group-hover:from-black/90 transition-all duration-300" />
 
-                      {/* Category Name */}
-                      <div className="absolute inset-0 flex items-end justify-center p-4">
-                        <span className="text-white font-bold text-base md:text-lg text-center drop-shadow-lg group-hover:scale-110 transition-transform duration-300 group-hover:text-red-600">
-                          {category?.name} ({category?._count?.meals || 0})
-                        </span>
+                        {/* Category Name */}
+                        <div className="absolute inset-0 flex items-end justify-center p-4">
+                          <span className="text-white font-bold text-base md:text-lg text-center drop-shadow-lg group-hover:scale-110 transition-transform duration-300 group-hover:text-red-600">
+                            {category?.name} ({category?._count?.meals || 0})
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </Link>
             </CarouselItem>
           ))}
         </CarouselContent>

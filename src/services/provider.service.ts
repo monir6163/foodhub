@@ -56,4 +56,33 @@ export const providerService = {
       };
     }
   },
+
+  getPopularProvider: async function () {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/providers/popular`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        return {
+          data: null,
+          message: "Failed to fetch popular providers",
+          status: false,
+        };
+      }
+      const data = await res.json();
+      return { data: data, error: null, status: true };
+    } catch (error) {
+      console.log(error);
+      return {
+        data: null,
+        message: "Failed to fetch popular providers",
+        status: false,
+      };
+    }
+  },
 };

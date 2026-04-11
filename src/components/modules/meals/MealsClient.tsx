@@ -24,6 +24,7 @@ export function MealsClient({
     searchParams.get("search") || "",
   );
   const [filters, setFilters] = useState<FilterValues>({
+    category: searchParams.get("category") || undefined,
     cuisine: searchParams.get("cuisine") || "All",
     dietary: searchParams.get("dietary")?.split(",").filter(Boolean) || [],
     mealType: searchParams.get("mealType") || "All",
@@ -53,6 +54,8 @@ export function MealsClient({
       const params = new URLSearchParams();
       params.set("page", page.toString());
       if (search) params.set("search", search);
+      if (currentFilters.category)
+        params.set("category", currentFilters.category);
       if (currentFilters.cuisine !== "All")
         params.set("cuisine", currentFilters.cuisine);
       if (currentFilters.dietary.length > 0)

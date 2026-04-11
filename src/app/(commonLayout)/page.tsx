@@ -1,10 +1,13 @@
 import { categoryActions } from "@/actions/categories";
 import { getPopularMeals } from "@/actions/reviews";
 import { CategorySlider } from "@/components/modules/Home/CategorySlider";
+import { FoodHubAdvantage } from "@/components/modules/Home/FoodHubAdvantage";
 import HeroSection from "@/components/modules/Home/Hero";
 import { HowItWorks } from "@/components/modules/Home/HowItWorks";
+import { OffersSection } from "@/components/modules/Home/OffersSection";
 import { OrderTracking } from "@/components/modules/Home/OrderTracking";
 import { PopularMeals } from "@/components/modules/Home/PopularMeals";
+import PopularProvider from "@/components/modules/Home/PopularProvider";
 import {
   CategorySliderSkeleton,
   PopularMealsSkeleton,
@@ -45,7 +48,10 @@ export default async function Home() {
       <Suspense fallback={<PopularMealsSkeleton />}>
         <PopularMeals meals={meals?.data} />
       </Suspense>
+      <FoodHubAdvantage />
+      <OffersSection />
       <HowItWorks />
+      <PopularProvider />
       <OrderTracking />
     </>
   );
