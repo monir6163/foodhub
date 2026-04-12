@@ -14,6 +14,7 @@ import {
   Trash2,
   Utensils,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -137,9 +138,12 @@ export function CartClient() {
                     {/* Image */}
                     <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-muted shrink-0">
                       {item.image ? (
-                        <div className="flex items-center justify-center h-full">
-                          <Utensils className="h-16 w-16 text-muted-foreground/30" />
-                        </div>
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          fill
+                          className="object-cover"
+                        />
                       ) : (
                         <div className="flex items-center justify-center h-full">
                           <Utensils className="h-16 w-16 text-muted-foreground/30" />

@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { formatBDT } from "@/lib/utils";
 import { MoreVertical, UtensilsCrossed } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -82,9 +83,12 @@ export default function MealCard({ meal }: MealCardProps) {
       <Card className="overflow-hidden group hover:shadow-lg transition-shadow">
         <div className="relative h-48 bg-muted overflow-hidden">
           {meal?.image ? (
-            <div className="w-full h-full flex items-center justify-center">
-              <UtensilsCrossed className="h-12 w-12 text-muted-foreground" />
-            </div>
+            <Image
+              src={meal.image}
+              alt={meal.name}
+              fill
+              className="object-cover"
+            />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
               <UtensilsCrossed className="h-12 w-12 text-muted-foreground" />

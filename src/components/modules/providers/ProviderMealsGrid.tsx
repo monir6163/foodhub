@@ -15,6 +15,7 @@ import {
   Star,
   Utensils,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -91,9 +92,12 @@ export function ProviderMealsGrid({
             <CardHeader className="p-0 relative">
               <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-primary/20 to-primary/5">
                 {meal.image ? (
-                  <div className="flex items-center justify-center h-full">
-                    <Utensils className="h-16 w-16 text-muted-foreground/30" />
-                  </div>
+                  <Image
+                    src={meal.image}
+                    alt={meal.name}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
                 ) : (
                   <div className="flex items-center justify-center h-full">
                     <Utensils className="h-16 w-16 text-muted-foreground/30" />
