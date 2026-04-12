@@ -20,6 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatBDT } from "@/lib/utils";
 import { MoreVertical, UtensilsCrossed } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -157,7 +158,7 @@ export default function MealCard({ meal }: MealCardProps) {
 
           <div className="flex justify-between items-center pt-2 border-t">
             <div>
-              <p className="text-2xl font-bold">${meal.price}</p>
+              <p className="text-2xl font-bold">{formatBDT(meal.price)}</p>
             </div>
             <div className="text-right text-sm text-muted-foreground">
               <p>{meal.calories} cal</p>

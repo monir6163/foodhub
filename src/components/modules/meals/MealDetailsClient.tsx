@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { formatBDT } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { useState } from "react";
@@ -92,7 +93,7 @@ export function MealDetailsClient({ meal }: MealDetailsClientProps) {
         >
           <ShoppingCart className="w-5 h-5" />
           {meal.isAvailable
-            ? `Add to Cart - $${(meal.price * quantity).toFixed(2)}`
+            ? `Add to Cart - ${formatBDT(meal.price * quantity)}`
             : "Currently Unavailable"}
         </Button>
       </div>
@@ -104,7 +105,7 @@ export function MealDetailsClient({ meal }: MealDetailsClientProps) {
       )}
 
       <p className="text-xs text-muted-foreground text-center">
-        Free delivery on orders over $30
+        Free delivery on orders over {formatBDT(30)}
       </p>
     </div>
   );

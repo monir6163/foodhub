@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatBDT } from "@/lib/utils";
 import { Clock, DollarSign, Package, ShoppingBag } from "lucide-react";
 
 export default async function MyOrdersPage() {
@@ -90,7 +91,7 @@ export default async function MyOrdersPage() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalRevenue.toFixed(2)}</div>
+            <div className="text-2xl font-bold">{formatBDT(totalRevenue)}</div>
             <p className="text-xs text-muted-foreground mt-1">Total earnings</p>
           </CardContent>
         </Card>

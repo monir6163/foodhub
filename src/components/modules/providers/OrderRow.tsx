@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { formatBDT } from "@/lib/utils";
 import { format, formatDistanceToNow } from "date-fns";
 import { Mail, MapPin, Package } from "lucide-react";
 import Image from "next/image";
@@ -130,7 +131,7 @@ export default function OrderRow({ order }: OrderRowProps) {
         </div>
       </TableCell>
       <TableCell className="font-semibold">
-        ${order.totalAmount.toFixed(2)}
+        {formatBDT(order.totalAmount)}
       </TableCell>
       <TableCell className="max-w-50 truncate">{order.address}</TableCell>
       <TableCell className="text-muted-foreground">
@@ -170,7 +171,7 @@ export default function OrderRow({ order }: OrderRowProps) {
                     Total Amount
                   </p>
                   <p className="text-2xl font-bold">
-                    ${order.totalAmount.toFixed(2)}
+                    {formatBDT(order.totalAmount)}
                   </p>
                 </div>
                 <div>
@@ -262,10 +263,10 @@ export default function OrderRow({ order }: OrderRowProps) {
                       </div>
                       <div className="text-right shrink-0">
                         <p className="font-semibold">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          {formatBDT(item.price * item.quantity)}
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          ${item.price.toFixed(2)} each
+                          {formatBDT(item.price)} each
                         </p>
                       </div>
                     </div>
@@ -280,18 +281,18 @@ export default function OrderRow({ order }: OrderRowProps) {
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
                   <span className="font-medium">
-                    ${order.totalAmount.toFixed(2)}
+                    {formatBDT(order.totalAmount)}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Delivery Fee</span>
-                  <span className="font-medium">$0.00</span>
+                  <span className="font-medium">{formatBDT(0)}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between">
                   <span className="font-semibold">Total</span>
                   <span className="text-xl font-bold">
-                    ${order.totalAmount.toFixed(2)}
+                    {formatBDT(order.totalAmount)}
                   </span>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import { getProviderMeals } from "@/actions/getProviders";
 import MealCard from "@/components/modules/providers/MealCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatBDT } from "@/lib/utils";
 import { DollarSign, Package, Plus, UtensilsCrossed } from "lucide-react";
 import Link from "next/link";
 
@@ -71,8 +72,7 @@ export default async function MealsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              $
-              {totalMeals > 0 ? (totalRevenue / totalMeals).toFixed(2) : "0.00"}
+              {formatBDT(totalMeals > 0 ? totalRevenue / totalMeals : 0)}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
               Per meal average

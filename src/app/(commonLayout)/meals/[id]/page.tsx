@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { formatBDT } from "@/lib/utils";
 import { mealService } from "@/services/meal.service";
 import {
   ArrowLeft,
@@ -103,7 +104,7 @@ export default async function MealDetailsPage({
               </h1>
               <div className="flex items-baseline gap-3">
                 <span className="text-4xl font-bold text-primary">
-                  ${meal.price.toFixed(2)}
+                  {formatBDT(meal.price)}
                 </span>
               </div>
             </div>

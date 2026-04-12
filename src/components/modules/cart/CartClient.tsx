@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { formatBDT } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import {
   ArrowLeft,
@@ -154,7 +155,7 @@ export function CartClient() {
                             {item.name}
                           </h3>
                           <p className="text-2xl font-bold text-primary mt-1">
-                            ${item.price.toFixed(2)}
+                            {formatBDT(item.price)}
                           </p>
                         </div>
 
@@ -205,7 +206,7 @@ export function CartClient() {
                             Subtotal
                           </p>
                           <p className="text-xl font-bold">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            {formatBDT(item.price * item.quantity)}
                           </p>
                         </div>
                       </div>
@@ -225,9 +226,7 @@ export function CartClient() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-semibold">
-                      ${subtotal.toFixed(2)}
-                    </span>
+                    <span className="font-semibold">{formatBDT(subtotal)}</span>
                   </div>
 
                   <div className="flex items-center justify-between">
@@ -236,7 +235,7 @@ export function CartClient() {
                       {deliveryFee === 0 ? (
                         <span className="text-green-600">FREE</span>
                       ) : (
-                        `$${deliveryFee.toFixed(2)}`
+                        formatBDT(deliveryFee)
                       )}
                     </span>
                   </div>
@@ -244,8 +243,7 @@ export function CartClient() {
                   {subtotal < 30 && (
                     <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-3">
                       <p className="text-sm text-blue-700 dark:text-blue-300">
-                        Add ${(30 - subtotal).toFixed(2)} more for free
-                        delivery!
+                        Add {formatBDT(30 - subtotal)} more for free delivery!
                       </p>
                     </div>
                   )}
@@ -255,7 +253,7 @@ export function CartClient() {
                   <div className="flex items-center justify-between text-lg">
                     <span className="font-bold">Total</span>
                     <span className="font-bold text-primary text-2xl">
-                      ${total.toFixed(2)}
+                      {formatBDT(total)}
                     </span>
                   </div>
                 </div>

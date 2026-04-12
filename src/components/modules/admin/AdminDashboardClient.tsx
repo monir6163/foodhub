@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatBDT } from "@/lib/utils";
 import {
   CheckCircle2,
   Clock,
@@ -149,13 +150,6 @@ export default function AdminDashboardClient({
       meals: cat._count?.meals || 0,
     }));
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
-  };
-
   // Recent users (last 5)
   const recentUsers = users
     .sort(
@@ -217,7 +211,7 @@ export default function AdminDashboardClient({
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">
-              {formatCurrency(stats.totalRevenue)}
+              {formatBDT(stats.totalRevenue)}
             </div>
             <div className="flex items-center gap-1 mt-2 text-xs text-green-600">
               <TrendingUp className="h-3 w-3" />
@@ -316,7 +310,7 @@ export default function AdminDashboardClient({
                   stroke="#22c55e"
                   fill="#22c55e"
                   fillOpacity={0.6}
-                  name="Revenue ($)"
+                  name="Revenue (BDT)"
                 />
               </AreaChart>
             </ResponsiveContainer>

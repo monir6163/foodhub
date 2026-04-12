@@ -13,7 +13,6 @@ import { motion } from "framer-motion";
 import {
   ArrowUpRight,
   Clock,
-  DollarSign,
   Eye,
   Flame,
   ShoppingCart,
@@ -216,7 +215,7 @@ export function PopularMeals({ meals }: ProviderMealsGridProps) {
 
               <CardFooter className="p-4 pt-0 flex items-center justify-between">
                 <div className="flex items-center gap-1">
-                  <DollarSign className="h-5 w-5 text-primary" />
+                  <span className="text-primary font-semibold">৳</span>
                   <span className="text-2xl font-bold">{meal.price}</span>
                 </div>
                 <Button

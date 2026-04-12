@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatBDT } from "@/lib/utils";
 import { orderService } from "@/services/order.service";
 import { userService } from "@/services/user.service";
 import {
@@ -147,7 +148,7 @@ export default async function DashboardPage() {
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalSpent.toFixed(2)}</div>
+            <div className="text-2xl font-bold">{formatBDT(totalSpent)}</div>
             <p className="text-xs text-muted-foreground mt-1">
               On delivered orders
             </p>
@@ -194,8 +195,8 @@ export default async function DashboardPage() {
                           </Badge>
                         </div>
                         <p className="text-sm text-muted-foreground">
-                          {order.items?.length || 0} item(s) • $
-                          {order.totalAmount.toFixed(2)}
+                          {order.items?.length || 0} item(s) •{" "}
+                          {formatBDT(order.totalAmount)}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           {new Date(order.createdAt).toLocaleDateString(

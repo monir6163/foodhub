@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatBDT } from "@/lib/utils";
 import {
   AlertCircle,
   CheckCircle2,
@@ -116,7 +117,7 @@ export default function ProviderDashboardClient({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              ${stats.totalRevenue.toFixed(2)}
+              {formatBDT(stats.totalRevenue)}
             </div>
             <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
               <TrendingUp className="h-3 w-3" />
@@ -160,10 +161,11 @@ export default function ProviderDashboardClient({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              $
-              {stats.totalOrders > 0
-                ? (stats.totalRevenue / stats.totalOrders).toFixed(2)
-                : "0.00"}
+              {formatBDT(
+                stats.totalOrders > 0
+                  ? stats.totalRevenue / stats.totalOrders
+                  : 0,
+              )}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
               Per order average
@@ -264,7 +266,7 @@ export default function ProviderDashboardClient({
                   stroke="#3b82f6"
                   fillOpacity={1}
                   fill="url(#colorRevenue)"
-                  name="Revenue ($)"
+                  name="Revenue (BDT)"
                 />
                 <Area
                   type="monotone"
@@ -295,7 +297,7 @@ export default function ProviderDashboardClient({
                   outerRadius={100}
                   paddingAngle={5}
                   dataKey="value"
-                  label={(entry) => `$${entry.value.toFixed(0)}`}
+                  label={(entry) => formatBDT(entry.value)}
                 >
                   {revenueByStatus.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -307,7 +309,7 @@ export default function ProviderDashboardClient({
                     border: "1px solid hsl(var(--border))",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: any) => `$${value.toFixed(2)}`}
+                  formatter={(value: any) => formatBDT(value)}
                 />
                 <Legend />
               </PieChart>
@@ -346,7 +348,7 @@ export default function ProviderDashboardClient({
                   dataKey="revenue"
                   fill="#3b82f6"
                   radius={[8, 8, 0, 0]}
-                  name="Revenue ($)"
+                  name="Revenue (BDT)"
                 />
               </BarChart>
             </ResponsiveContainer>

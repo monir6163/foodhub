@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { formatBDT } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import {
   ArrowLeft,
@@ -305,7 +306,7 @@ export function CheckoutClient({
                             Qty: {item.quantity}
                           </p>
                           <p className="text-sm font-semibold">
-                            ${(item.price * item.quantity).toFixed(2)}
+                            {formatBDT(item.price * item.quantity)}
                           </p>
                         </div>
                       </div>
@@ -318,9 +319,7 @@ export function CheckoutClient({
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span className="font-medium">
-                        ${subtotal.toFixed(2)}
-                      </span>
+                      <span className="font-medium">{formatBDT(subtotal)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">
@@ -330,14 +329,14 @@ export function CheckoutClient({
                         {deliveryFee === 0 ? (
                           <span className="text-green-600">FREE</span>
                         ) : (
-                          `$${deliveryFee.toFixed(2)}`
+                          formatBDT(deliveryFee)
                         )}
                       </span>
                     </div>
                     <Separator />
                     <div className="flex justify-between text-lg font-bold">
                       <span>Total</span>
-                      <span className="text-primary">${total.toFixed(2)}</span>
+                      <span className="text-primary">{formatBDT(total)}</span>
                     </div>
                   </div>
 

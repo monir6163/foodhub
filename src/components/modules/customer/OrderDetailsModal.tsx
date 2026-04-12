@@ -113,9 +113,9 @@ export function OrderDetailsModal({
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat("en-BD", {
       style: "currency",
-      currency: "USD",
+      currency: "BDT",
     }).format(price);
   };
 
