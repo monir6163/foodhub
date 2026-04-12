@@ -25,7 +25,6 @@ export const FoodHubAdvantage = () => {
   return (
     <section id="foodhub-advantage" className="py-16 md:py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/10 text-red-600 rounded-full text-sm font-medium uppercase tracking-wider">
             Our Commitment
@@ -41,19 +40,16 @@ export const FoodHubAdvantage = () => {
           </p>
         </div>
 
-        {/* Advantages Grid */}
         <div className="grid md:grid-cols-3 gap-8 lg:gap-10">
           {advantages.map((advantage) => (
             <div
               key={advantage.title}
               className="group relative bg-card rounded-2xl p-8 sm:p-10 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 border border-border/50 hover:border-primary/30"
             >
-              {/* Icon Container */}
               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-red-600/10 flex items-center justify-center mb-6 group-hover:bg-red-600 group-hover:scale-110 transition-all duration-300">
                 <advantage.icon className="w-8 h-8 sm:w-10 sm:h-10 text-red-600 group-hover:text-white transition-colors" />
               </div>
 
-              {/* Content */}
               <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-3 group-hover:text-red-600 transition-colors">
                 {advantage.title}
               </h3>
@@ -61,7 +57,6 @@ export const FoodHubAdvantage = () => {
                 {advantage.description}
               </p>
 
-              {/* Background decoration */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-red-600/5 rounded-full -z-10 group-hover:w-32 group-hover:h-32 transition-all duration-300" />
             </div>
           ))}
