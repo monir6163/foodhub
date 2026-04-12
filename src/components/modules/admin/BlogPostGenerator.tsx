@@ -1,5 +1,6 @@
 "use client";
 
+import { generateBlogPost } from "@/actions/blogs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -41,8 +42,6 @@ type BlogGeneratorResponse = {
   description: string | null;
 };
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL as string;
-
 const suggestedTopics = [
   "Healthy meal prep ideas",
   "Best foods for rainy day cravings",
@@ -68,18 +67,9 @@ export default function BlogPostGenerator() {
 
     setLoading(true);
     try {
-      const response = await fetch(`${BACKEND_URL}/api/ai/blog-post`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ topic: finalTopic }),
-      });
+      const payload = await generateBlogPost(finalTopic);
 
-      const payload = await response.json();
-
-      if (!response.ok || !payload?.success) {
+      if (!payload?.status || !payload?.data) {
         throw new Error(payload?.message || "Failed to generate blog post");
       }
 

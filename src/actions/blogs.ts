@@ -12,6 +12,53 @@ type BlogQuery = {
   sortOrder?: "asc" | "desc";
 };
 
+export const generateBlogPost = async (topic: string) => {
+  try {
+    const finalTopic = topic?.trim();
+    if (!finalTopic) {
+      return {
+        data: null,
+        message: "Topic is required",
+        status: false,
+      };
+    }
+
+    const cookieStore = await cookies();
+    const response = await fetch(`${BACKEND_URL}/api/ai/blog-post`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify({ topic: finalTopic }),
+      cache: "no-store",
+    });
+
+    const payload = await response.json();
+
+    if (!response.ok || !payload?.success) {
+      return {
+        data: null,
+        message: payload?.message || "Failed to generate blog post",
+        status: false,
+      };
+    }
+
+    return {
+      data: payload?.data || null,
+      message: payload?.message || "Blog post generated and saved successfully",
+      status: true,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      data: null,
+      message: "Failed to generate blog post",
+      status: false,
+    };
+  }
+};
+
 export const getAllBlogs = async (query?: BlogQuery) => {
   try {
     const cookieStore = await cookies();
