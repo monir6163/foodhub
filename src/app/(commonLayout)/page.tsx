@@ -1,10 +1,13 @@
 import { categoryActions } from "@/actions/categories";
 import { getPopularMeals } from "@/actions/reviews";
+import { AppDownloadSection } from "@/components/modules/Home/AppDownloadSection";
 import { BecomeProviderSection } from "@/components/modules/Home/BecomeProviderSection";
 import { CategorySlider } from "@/components/modules/Home/CategorySlider";
+import { FaqSection } from "@/components/modules/Home/FaqSection";
 import { FoodHubAdvantage } from "@/components/modules/Home/FoodHubAdvantage";
 import HeroSection from "@/components/modules/Home/Hero";
 import { HowItWorks } from "@/components/modules/Home/HowItWorks";
+import { NewsletterSection } from "@/components/modules/Home/NewsletterSection";
 import { OffersSection } from "@/components/modules/Home/OffersSection";
 import { OrderTracking } from "@/components/modules/Home/OrderTracking";
 import { PopularMeals } from "@/components/modules/Home/PopularMeals";
@@ -54,6 +57,9 @@ export default async function Home() {
       <OffersSection />
       <OrderTracking />
       <TestimonialsSection />
+      <FaqSection />
+      <AppDownloadSection />
+      <NewsletterSection />
       <BecomeProviderSection />
     </>
   );

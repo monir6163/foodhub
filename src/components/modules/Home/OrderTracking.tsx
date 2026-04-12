@@ -37,7 +37,7 @@ export const OrderTracking = () => {
   return (
     <motion.section
       id="tracking"
-      className=" bg-red-600/5 py-16"
+      className="py-16 md:py-24 bg-linear-to-b from-background to-red-600/5"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
