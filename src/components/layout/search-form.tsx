@@ -106,17 +106,26 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   key={meal.id}
                   href={`/meals/${meal.id}`}
                   onClick={onClose}
-                  className="flex items-center justify-between rounded-lg border border-border/70 px-3 py-2 hover:bg-muted/50 transition-colors"
+                  className="flex items-center gap-3 rounded-lg border border-border/70 px-3 py-2 hover:bg-muted/50 transition-colors"
                 >
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">
+                  {meal.image && (
+                    <img
+                      src={meal.image}
+                      alt={meal.name}
+                      className="h-12 w-12 rounded object-cover flex-shrink-0"
+                    />
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-foreground truncate">
                       {meal.name}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       ৳{meal.price}
                     </p>
                   </div>
-                  <span className="text-xs text-red-600 font-medium">View</span>
+                  <span className="text-xs text-red-600 font-medium flex-shrink-0">
+                    View
+                  </span>
                 </Link>
               ))}
             </div>

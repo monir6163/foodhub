@@ -1,3 +1,4 @@
+import { AIChatbox } from "@/components/layout/AiChatBot";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import type { Metadata } from "next";
@@ -40,6 +41,7 @@ export default function RootLayout({
           <NextTopLoader color="red" height={2} />
           {children}
           <Toaster position="top-right" richColors />
+          <AIChatbox />
         </ThemeProvider>
       </body>
     </html>
