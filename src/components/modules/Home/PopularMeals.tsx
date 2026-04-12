@@ -152,7 +152,7 @@ export function PopularMeals({ meals }: ProviderMealsGridProps) {
 
                   <Link
                     href={`/meals/${meal.id}`}
-                    className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-white/90 text-black backdrop-blur-md flex items-center justify-center shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+                    className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-black shadow-lg backdrop-blur-md opacity-100 translate-y-0 transition-all duration-300 sm:opacity-0 sm:translate-y-2 sm:group-hover:opacity-100 sm:group-hover:translate-y-0"
                     aria-label={`View details for ${meal.name}`}
                   >
                     <Eye className="h-5 w-5" />

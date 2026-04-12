@@ -92,9 +92,7 @@ export function MealDetailsClient({ meal }: MealDetailsClientProps) {
           onClick={handleAddToCart}
         >
           <ShoppingCart className="w-5 h-5" />
-          {meal.isAvailable
-            ? `Add to Cart - ${formatBDT(meal.price * quantity)}`
-            : "Currently Unavailable"}
+          {meal.isAvailable ? `Add to Cart` : "Out of Stock"}
         </Button>
       </div>
 

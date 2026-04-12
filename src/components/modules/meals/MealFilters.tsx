@@ -7,8 +7,8 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
 import { Filter, X } from "lucide-react";
-import { useState } from "react";
 
 interface MealFiltersProps {
   onFilterChange: (filters: FilterValues) => void;
@@ -17,6 +17,7 @@ interface MealFiltersProps {
   cuisines?: string[];
   dietaryOptions?: string[];
   mealTypes?: string[];
+  className?: string;
 }
 
 export interface FilterValues {
@@ -49,9 +50,8 @@ export function MealFilters({
   cuisines = [],
   dietaryOptions = [],
   mealTypes = [],
+  className,
 }: MealFiltersProps) {
-  const [isOpen, setIsOpen] = useState(true);
-
   const cuisineList = ["All", ...cuisines];
   const mealTypeList = ["All", ...mealTypes];
 
@@ -112,7 +112,7 @@ export function MealFilters({
     filters.sortOrder !== "desc";
 
   return (
-    <Card className="sticky top-20 border-2 shadow-lg">
+    <Card className={cn("sticky top-20 border-2 shadow-lg", className)}>
       <CardContent className="p-6 space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">

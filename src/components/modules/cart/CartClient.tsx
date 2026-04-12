@@ -82,7 +82,9 @@ export function CartClient() {
             <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-muted mb-6">
               <ShoppingCart className="h-12 w-12 text-muted-foreground" />
             </div>
-            <h2 className="text-3xl font-bold mb-2">Your cart is empty</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-center">
+              Your cart is empty
+            </h2>
             <p className="text-muted-foreground mb-8 text-center">
               Looks like you haven't added any items to your cart yet.
             </p>
@@ -102,7 +104,7 @@ export function CartClient() {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
           <div>
             <Button variant="ghost" asChild className="gap-2 mb-4">
               <Link href="/meals">
@@ -110,7 +112,7 @@ export function CartClient() {
                 Continue Shopping
               </Link>
             </Button>
-            <h1 className="text-4xl font-bold">Shopping Cart</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold">Shopping Cart</h1>
             <p className="text-muted-foreground mt-2">
               {items.length} {items.length === 1 ? "item" : "items"} in your
               cart
@@ -120,7 +122,7 @@ export function CartClient() {
             <Button
               variant="outline"
               onClick={handleClearCart}
-              className="gap-2"
+              className="gap-2 w-full sm:w-auto"
             >
               <Trash2 className="w-4 h-4" />
               Clear Cart
@@ -133,10 +135,10 @@ export function CartClient() {
           <div className="lg:col-span-2 space-y-4">
             {items.map((item) => (
               <Card key={item.id}>
-                <CardContent className="p-6">
-                  <div className="flex gap-4">
+                <CardContent className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row gap-4">
                     {/* Image */}
-                    <div className="relative w-24 h-24 rounded-lg overflow-hidden bg-muted shrink-0">
+                    <div className="relative w-full h-44 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-muted shrink-0">
                       {item.image ? (
                         <Image
                           src={item.image}
@@ -153,12 +155,12 @@ export function CartClient() {
 
                     {/* Details */}
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start justify-between gap-3">
                         <div>
-                          <h3 className="font-semibold text-lg line-clamp-1">
+                          <h3 className="font-semibold text-base sm:text-lg line-clamp-1">
                             {item.name}
                           </h3>
-                          <p className="text-2xl font-bold text-primary mt-1">
+                          <p className="text-xl sm:text-2xl font-bold text-primary mt-1">
                             {formatBDT(item.price)}
                           </p>
                         </div>
@@ -174,7 +176,7 @@ export function CartClient() {
                       </div>
 
                       {/* Quantity Controls */}
-                      <div className="flex items-center gap-4 mt-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-4">
                         <span className="text-sm text-muted-foreground">
                           Quantity:
                         </span>
@@ -205,11 +207,11 @@ export function CartClient() {
                             <Plus className="h-4 w-4" />
                           </Button>
                         </div>
-                        <div className="ml-auto text-right">
+                        <div className="sm:ml-auto text-left sm:text-right">
                           <p className="text-sm text-muted-foreground">
                             Subtotal
                           </p>
-                          <p className="text-xl font-bold">
+                          <p className="text-lg sm:text-xl font-bold">
                             {formatBDT(item.price * item.quantity)}
                           </p>
                         </div>
