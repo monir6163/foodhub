@@ -11,6 +11,7 @@ import {
 import { useCartStore } from "@/store/useCartStore";
 import { MealCardProps } from "@/types/meal.type";
 import { Clock, Eye, Flame, ShoppingCart, Utensils } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -34,14 +35,27 @@ export function MealCard({ meal }: MealCardProps) {
       <CardHeader className="p-0 relative">
         <div className="relative h-48 w-full overflow-hidden bg-linear-to-br from-primary/20 to-primary/5">
           {meal.image ? (
-            <div className="flex items-center justify-center h-full">
-              <Utensils className="h-16 w-16 text-muted-foreground/30" />
-            </div>
+            <Image
+              src={meal.image}
+              alt={meal.name}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
           ) : (
             <div className="flex items-center justify-center h-full">
               <Utensils className="h-16 w-16 text-muted-foreground/30" />
             </div>
           )}
+
+          <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+          <Link
+            href={`/meals/${meal.id}`}
+            className="absolute bottom-3 right-3 w-10 h-10 rounded-full bg-white/90 text-black backdrop-blur-md flex items-center justify-center shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
+            aria-label={`View details for ${meal.name}`}
+          >
+            <Eye className="h-5 w-5" />
+          </Link>
 
           <div className="absolute top-2 right-2 flex gap-2">
             {meal.cuisine && meal.cuisine.length > 0 && (
@@ -100,32 +114,20 @@ export function MealCard({ meal }: MealCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="p-4 pt-0 flex flex-col gap-3">
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-1">
-            <span className="text-sm text-muted-foreground">৳</span>
-            <span className="text-2xl font-bold">{meal.price}</span>
-          </div>
-          <Button
-            size="sm"
-            disabled={!meal.isAvailable}
-            onClick={handleAddToCart}
-            className="group-hover:bg-primary cursor-pointer group-hover:text-primary-foreground transition-all"
-          >
-            <ShoppingCart className="h-4 w-4 mr-1" />
-            Add to Cart
-          </Button>
+      <CardFooter className="p-4 pt-0 flex items-center justify-between">
+        <div className="flex items-center gap-1">
+          <span className="text-sm text-muted-foreground">৳</span>
+          <span className="text-2xl font-bold">{meal.price}</span>
         </div>
-        <Link href={`/meals/${meal.id}`} className="w-full">
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full cursor-pointer border-primary/50 hover:bg-primary/10"
-          >
-            <Eye className="h-4 w-4 mr-2" />
-            View Details
-          </Button>
-        </Link>
+        <Button
+          size="sm"
+          disabled={!meal.isAvailable}
+          onClick={handleAddToCart}
+          className="rounded-lg px-4 bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+        >
+          <ShoppingCart className="h-4 w-4 mr-2" />
+          Add to Cart
+        </Button>
       </CardFooter>
     </Card>
   );

@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { CheckCircle2, Store, Users, Wallet } from "lucide-react";
 import Link from "next/link";
 
@@ -18,32 +21,65 @@ const benefits = [
 ];
 
 export const BecomeProviderSection = () => {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section
+    <motion.section
       id="become-provider-section"
       className="py-16 md:py-24 bg-linear-to-b from-background to-red-600/5"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.08,
+          },
+        },
+      }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          <div>
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/10 text-red-600 rounded-full text-sm font-semibold uppercase tracking-wider">
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          >
+            <motion.span
+              className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/10 text-red-600 rounded-full text-sm font-semibold uppercase tracking-wider"
+              variants={fadeUp}
+              transition={{ duration: 0.24, ease: "easeOut" }}
+            >
               Partner Program
-            </span>
+            </motion.span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-4 leading-tight">
+            <motion.h2
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-4 leading-tight"
+              variants={fadeUp}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
               Grow Your Restaurant Business With Us
-            </h2>
+            </motion.h2>
 
-            <p className="text-base sm:text-lg text-muted-foreground mt-5 max-w-xl">
+            <motion.p
+              className="text-base sm:text-lg text-muted-foreground mt-5 max-w-xl"
+              variants={fadeUp}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
               Join our growing marketplace and turn every meal into more reach,
               better operations, and reliable earnings.
-            </p>
+            </motion.p>
 
-            <ul className="mt-8 space-y-4">
+            <motion.ul className="mt-8 space-y-4" variants={fadeUp}>
               {benefits.map((benefit) => (
-                <li
+                <motion.li
                   key={benefit.label}
                   className="group flex items-center gap-3 rounded-xl px-2 py-1 transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-600/5"
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
                 >
                   <span className="w-10 h-10 rounded-xl bg-red-600/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                     <benefit.icon className="w-5 h-5 text-red-600" />
@@ -52,23 +88,37 @@ export const BecomeProviderSection = () => {
                     {benefit.label}
                   </span>
                   <CheckCircle2 className="w-5 h-5 text-green-600 ml-auto transition-transform duration-300 group-hover:scale-110" />
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
 
             <Link href="/become-provider" className="inline-block mt-9">
-              <Button
-                className="group relative overflow-hidden h-12 px-8 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-base transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_16px_35px_-10px_rgba(220,38,38,0.8)] active:translate-y-0 active:scale-[0.98]"
-                type="button"
+              <motion.div
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.98, y: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               >
-                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full" />
-                <span className="relative">Join as Partner</span>
-              </Button>
+                <Button
+                  className="group relative overflow-hidden h-12 px-8 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold text-base transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_16px_35px_-10px_rgba(220,38,38,0.8)] active:translate-y-0 active:scale-[0.98]"
+                  type="button"
+                >
+                  <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full" />
+                  <span className="relative">Join as Partner</span>
+                </Button>
+              </motion.div>
             </Link>
-          </div>
+          </motion.div>
 
-          <div className="relative">
-            <div className="relative rounded-3xl border border-red-200/60 bg-card p-8 sm:p-10 shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
+          <motion.div
+            className="relative"
+            variants={fadeUp}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <motion.div
+              className="relative rounded-3xl border border-red-200/60 bg-card p-8 sm:p-10 shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+            >
               <div className="absolute -top-16 -right-16 w-44 h-44 bg-red-500/15 rounded-full blur-3xl" />
               <div className="absolute -bottom-16 -left-16 w-44 h-44 bg-orange-400/20 rounded-full blur-3xl" />
 
@@ -106,10 +156,10 @@ export const BecomeProviderSection = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };

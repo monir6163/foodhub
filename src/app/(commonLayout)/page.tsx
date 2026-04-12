@@ -49,12 +49,12 @@ export default async function Home() {
       <Suspense fallback={<PopularMealsSkeleton />}>
         <PopularMeals meals={meals?.data} />
       </Suspense>
-      <FoodHubAdvantage />
-      <BecomeProviderSection />
-      <OffersSection />
-      <TestimonialsSection />
       <HowItWorks />
+      <FoodHubAdvantage />
+      <OffersSection />
       <OrderTracking />
+      <TestimonialsSection />
+      <BecomeProviderSection />
     </>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 
 interface Testimonial {
@@ -55,13 +56,27 @@ const testimonials: Testimonial[] = [
 const duplicated = [...testimonials, ...testimonials];
 
 export const TestimonialsSection = () => {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 18 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section
+    <motion.section
       id="testimonials"
       className="py-16 md:py-24 bg-linear-to-b from-red-600/5 via-background to-background overflow-hidden"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeUp}
+      transition={{ duration: 0.28, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
+          variants={fadeUp}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+        >
           <span className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/10 text-red-600 rounded-full text-sm font-semibold uppercase tracking-wider">
             Customer Stories
           </span>
@@ -71,17 +86,23 @@ export const TestimonialsSection = () => {
           <p className="text-base sm:text-lg text-muted-foreground mt-5">
             Real feedback from real customers who trust FoodHub every day.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="relative slider-shell">
+        <motion.div
+          className="relative slider-shell"
+          variants={fadeUp}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
           <div className="pointer-events-none absolute -left-8 top-0 bottom-0 w-16 bg-linear-to-r from-background to-transparent z-10" />
           <div className="pointer-events-none absolute -right-8 top-0 bottom-0 w-16 bg-linear-to-l from-background to-transparent z-10" />
 
           <div className="testimonial-track flex gap-5 w-max">
             {duplicated.map((item, index) => (
-              <article
+              <motion.article
                 key={`${item.id}-${index}`}
                 className="group w-70 sm:w-80 lg:w-90 rounded-2xl border border-white/35 bg-white/20 dark:bg-white/10 backdrop-blur-xl p-5 sm:p-6 shadow-[0_12px_45px_-24px_rgba(15,23,42,0.55)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_60px_-26px_rgba(15,23,42,0.72)]"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.24, ease: "easeOut" }}
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
@@ -115,10 +136,10 @@ export const TestimonialsSection = () => {
                 <p className="text-sm sm:text-base text-foreground/90 leading-relaxed">
                   {item.review}
                 </p>
-              </article>
+              </motion.article>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <style jsx>{`
@@ -146,6 +167,6 @@ export const TestimonialsSection = () => {
           }
         }
       `}</style>
-    </section>
+    </motion.section>
   );
 };

@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Bell, CheckCircle2, MapPin, ShieldCheck } from "lucide-react";
 
 const features = [
@@ -26,12 +29,28 @@ const trackingSteps = [
 ];
 
 export const OrderTracking = () => {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 18 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section id="tracking" className=" bg-red-600/5 py-16">
+    <motion.section
+      id="tracking"
+      className=" bg-red-600/5 py-16"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeUp}
+      transition={{ duration: 0.28, ease: "easeOut" }}
+    >
       <div className="section-container">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Content */}
-          <div>
+          <motion.div
+            variants={fadeUp}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+          >
             <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">
               Real-Time Tracking
             </span>
@@ -46,8 +65,18 @@ export const OrderTracking = () => {
 
             {/* Features */}
             <div className="grid sm:grid-cols-3 gap-6">
-              {features.map((feature) => (
-                <div key={feature.title} className="flex flex-col gap-2">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={feature.title}
+                  className="flex flex-col gap-2"
+                  variants={fadeUp}
+                  transition={{
+                    duration: 0.24,
+                    ease: "easeOut",
+                    delay: index * 0.05,
+                  }}
+                  whileHover={{ y: -3 }}
+                >
                   <div className="w-12 h-12 rounded-xl bg-red-600/10 flex items-center justify-center">
                     <feature.icon className="w-6 h-6 text-red-600" />
                   </div>
@@ -57,14 +86,22 @@ export const OrderTracking = () => {
                   <p className="text-sm text-muted-foreground">
                     {feature.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Visual - Order Tracking Card */}
-          <div className="relative">
-            <div className="bg-card rounded-3xl p-6 sm:p-8 shadow-xl border border-border">
+          <motion.div
+            className="relative"
+            variants={fadeUp}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <motion.div
+              className="bg-card rounded-3xl p-6 sm:p-8 shadow-xl border border-border"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.24, ease: "easeOut" }}
+            >
               {/* Header */}
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <div>
@@ -131,13 +168,13 @@ export const OrderTracking = () => {
                   <p className="text-sm text-muted-foreground">Live map view</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Decorative elements */}
             <div className="absolute -z-10 -top-4 -right-4 w-full h-full bg-red-600/5 rounded-3xl" />
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };

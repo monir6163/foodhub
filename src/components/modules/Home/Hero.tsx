@@ -1,11 +1,31 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function HeroSection() {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center hero-bg overflow-hidden">
+    <motion.section
+      className="relative min-h-screen flex items-center hero-bg overflow-hidden"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: 0.08,
+          },
+        },
+      }}
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -17,55 +37,86 @@ export default function HeroSection() {
           {/* Content */}
           <div className="flex flex-col gap-6 lg:gap-8">
             {/* Badge */}
-            <div className="animate-fade-up opacity-0 stagger-1">
+            <motion.div
+              variants={fadeUp}
+              transition={{ duration: 0.26, ease: "easeOut" }}
+            >
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/10 text-red-600 rounded-full text-sm font-medium">
                 <Sparkles size={16} />
                 #1 Food Delivery Platform
               </span>
-            </div>
+            </motion.div>
 
             {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-foreground animate-fade-up opacity-0 stagger-2">
+            <motion.h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-foreground"
+              variants={fadeUp}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
               Your Favorite Food,{" "}
               <span className="text-gradient">Delivered Fast</span>
-            </h1>
+            </motion.h1>
 
             {/* Subtext */}
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-lg animate-fade-up opacity-0 stagger-3">
+            <motion.p
+              className="text-lg sm:text-xl text-muted-foreground max-w-lg"
+              variants={fadeUp}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
               Discover amazing food from multiple providers in one place. Order
               from local restaurants and get it delivered to your door in
               minutes.
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 animate-fade-up opacity-0 stagger-4">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4"
+              variants={fadeUp}
+              transition={{ duration: 0.24, ease: "easeOut" }}
+            >
               <Link href={"/meals"} passHref>
-                <Button
-                  className="flex items-center gap-2 cursor-pointer w-full"
-                  size="lg"
-                  variant="destructive"
-                  type="button"
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  Browse Meals
-                  <ArrowRight
-                    className="transition-transform group-hover:translate-x-1"
-                    size={20}
-                  />
-                </Button>
+                  <Button
+                    className="flex items-center gap-2 cursor-pointer w-full"
+                    size="lg"
+                    variant="destructive"
+                    type="button"
+                  >
+                    Browse Meals
+                    <ArrowRight
+                      className="transition-transform group-hover:translate-x-1"
+                      size={20}
+                    />
+                  </Button>
+                </motion.div>
               </Link>
               <Link href={"/become-provider"} passHref>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="flex items-center gap-2 cursor-pointer w-full"
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  Become a Provider
-                </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="flex items-center gap-2 cursor-pointer w-full"
+                  >
+                    Become a Provider
+                  </Button>
+                </motion.div>
               </Link>
-            </div>
+            </motion.div>
 
             {/* Stats */}
-            <div className="flex items-center gap-8 pt-4 animate-fade-up opacity-0 stagger-4">
+            <motion.div
+              className="flex items-center gap-8 pt-4"
+              variants={fadeUp}
+              transition={{ duration: 0.28, ease: "easeOut" }}
+            >
               <div>
                 <p className="text-2xl sm:text-3xl font-bold text-foreground">
                   500+
@@ -86,11 +137,15 @@ export default function HeroSection() {
                 </p>
                 <p className="text-sm text-muted-foreground">Avg Delivery</p>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Hero Image */}
-          <div className="relative w-full h-full animate-fade-up opacity-0 stagger-3">
+          <motion.div
+            className="relative w-full h-full"
+            variants={fadeUp}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
             <div className="relative h-full">
               <Image
                 width={600}
@@ -100,7 +155,11 @@ export default function HeroSection() {
                 className="w-full h-full object-cover rounded-3xl shadow-2xl"
               />
               {/* Floating card */}
-              <div className="absolute -bottom-6 -left-6 bg-card p-4 rounded-2xl shadow-xl border border-border animate-fade-up">
+              <motion.div
+                className="absolute -bottom-6 -left-6 bg-card p-4 rounded-2xl shadow-xl border border-border"
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.2 }}
+              >
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                     <span className="text-2xl">🚀</span>
@@ -114,11 +173,11 @@ export default function HeroSection() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

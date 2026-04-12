@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import { Gift, Rocket, Truck, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -105,10 +106,20 @@ function CountdownTimer({ hours }: { hours: number }) {
 }
 
 export const OffersSection = () => {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 18 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section
+    <motion.section
       id="offers"
-      className="py-16 md:py-28 bg-gradient-to-b from-background to-muted/30 dark:to-black relative overflow-hidden"
+      className="py-16 md:py-28 bg-linear-to-b from-background to-muted/30 dark:to-black relative overflow-hidden"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeUp}
+      transition={{ duration: 0.28, ease: "easeOut" }}
     >
       {/* Background blobs (subtle) */}
       <div className="absolute inset-0 -z-10 opacity-50">
@@ -118,7 +129,11 @@ export const OffersSection = () => {
 
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          variants={fadeUp}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+        >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-600/10 rounded-full mb-4">
             <Zap className="w-4 h-4 text-red-600" />
             <span className="text-red-600 text-xs font-bold uppercase">
@@ -133,28 +148,35 @@ export const OffersSection = () => {
           <p className="text-muted-foreground text-lg">
             Grab these amazing deals before they expire.
           </p>
-        </div>
+        </motion.div>
 
         {/* Grid */}
         <div className="grid md:grid-cols-3 gap-6">
-          {offers.map((offer) => (
-            <div
+          {offers.map((offer, index) => (
+            <motion.div
               key={offer.id}
               className="group relative rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:scale-[1.03] shadow-xl border border-white/10 dark:border-white/5"
+              variants={fadeUp}
+              transition={{
+                duration: 0.24,
+                ease: "easeOut",
+                delay: index * 0.05,
+              }}
+              whileHover={{ y: -5 }}
             >
               {/* Gradient */}
               <div
-                className={`absolute inset-0 bg-gradient-to-br ${offer.bgGradient}`}
+                className={`absolute inset-0 bg-linear-to-br ${offer.bgGradient}`}
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-transparent" />
 
               {/* Hover Glow */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-white/5" />
 
               {/* Content */}
-              <div className="relative p-8 flex flex-col justify-between min-h-[380px] text-white">
+              <div className="relative p-8 flex flex-col justify-between min-h-95 text-white">
                 <div className="space-y-5">
                   {/* Badge */}
                   <span
@@ -187,18 +209,28 @@ export const OffersSection = () => {
                     <CountdownTimer hours={offer.expiresIn} />
                   </div>
 
-                  <Button className="w-full bg-white text-black hover:bg-black hover:text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 transition-all font-semibold h-12 rounded-xl shadow-lg">
-                    Claim Offer
-                  </Button>
+                  <motion.div
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Button className="w-full bg-white text-black hover:bg-black hover:text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 transition-all duration-200 font-semibold h-12 rounded-xl shadow-lg">
+                      Claim Offer
+                    </Button>
+                  </motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Bottom Stats */}
-        <div className="mt-16 flex justify-center">
-          <div className="flex items-center gap-8 px-8 py-4 rounded-2xl border bg-card/50 backdrop-blur-md">
+        <motion.div
+          className="mt-16 flex justify-center"
+          variants={fadeUp}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+        >
+          <div className="flex items-center gap-8 px-8 py-4 rounded-2xl border bg-card/50 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
             <div className="text-center">
               <div className="text-2xl font-bold text-red-500">50K+</div>
               <p className="text-sm text-muted-foreground">Users</p>
@@ -218,8 +250,8 @@ export const OffersSection = () => {
               <p className="text-sm text-muted-foreground">Support</p>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };

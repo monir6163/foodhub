@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Search, ShoppingBag, Truck } from "lucide-react";
 
 const steps = [
@@ -22,11 +25,28 @@ const steps = [
 ];
 
 export const HowItWorks = () => {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 18 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <section id="how-it-works" className="py-16 bg-secondary/30">
+    <motion.section
+      id="how-it-works"
+      className="py-16 bg-secondary/30"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeUp}
+      transition={{ duration: 0.28, ease: "easeOut" }}
+    >
       <div className="section-container">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-16"
+          variants={fadeUp}
+          transition={{ duration: 0.28, ease: "easeOut" }}
+        >
           <span className="text-red-600 font-semibold text-sm uppercase tracking-wider">
             Simple Process
           </span>
@@ -37,14 +57,21 @@ export const HowItWorks = () => {
             Getting your favorite food delivered has never been easier. Just
             three simple steps.
           </p>
-        </div>
+        </motion.div>
 
         {/* Steps */}
         <div className="grid md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
-            <div
+            <motion.div
               key={step.title}
               className="group relative bg-card rounded-3xl p-8 transition-all duration-300 hover:shadow-(--card-shadow-hover) hover:-translate-y-1"
+              variants={fadeUp}
+              transition={{
+                duration: 0.24,
+                ease: "easeOut",
+                delay: index * 0.05,
+              }}
+              whileHover={{ y: -5 }}
             >
               {/* Step number */}
               <span className="absolute top-6 right-6 text-6xl font-bold text-muted-foreground/10 pointer-events-none">
@@ -63,10 +90,10 @@ export const HowItWorks = () => {
               <p className="text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
