@@ -82,9 +82,9 @@ export function PopularMeals({ meals }: ProviderMealsGridProps) {
   return (
     <motion.section
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
-      initial="hidden"
+      initial={false}
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={fadeUp}
       transition={{ duration: 0.28, ease: "easeOut" }}
     >
@@ -190,7 +190,7 @@ export function PopularMeals({ meals }: ProviderMealsGridProps) {
                 </div>
 
                 <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                  {meal.rating && (
+                  {typeof meal.rating === "number" && (
                     <div className="flex items-center gap-1">
                       <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                       <span className="font-medium">

@@ -50,7 +50,9 @@ export default async function Home() {
         <CategorySlider categories={categories} />
       </Suspense>
       <Suspense fallback={<PopularMealsSkeleton />}>
-        <PopularMeals meals={meals?.data} />
+        <PopularMeals
+          meals={Array.isArray(meals) ? meals : meals?.data || []}
+        />
       </Suspense>
       <HowItWorks />
       <FoodHubAdvantage />

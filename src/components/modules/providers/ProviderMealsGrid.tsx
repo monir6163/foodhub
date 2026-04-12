@@ -45,6 +45,8 @@ export function ProviderMealsGrid({
 }: ProviderMealsGridProps) {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
+  console.log(meals);
+
   const toggleFavorite = (mealId: string) => {
     setFavorites((prev) => {
       const newFavorites = new Set(prev);
@@ -133,7 +135,7 @@ export function ProviderMealsGrid({
               </div>
 
               <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                {meal.rating && (
+                {typeof meal.rating === "number" && (
                   <div className="flex items-center gap-1">
                     <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
                     <span className="font-medium">
