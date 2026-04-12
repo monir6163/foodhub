@@ -1,5 +1,8 @@
 "use client";
-import { updateMealProvider } from "@/actions/getProviders";
+import {
+  generateMealDescriptionProvider,
+  updateMealProvider,
+} from "@/actions/getProviders";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -21,6 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { mealFormSchema, MealFormType } from "@/schema/mealSchema";
 import { useForm } from "@tanstack/react-form";
+import { Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { toast } from "sonner";
@@ -37,6 +41,8 @@ export default function EditMealForm({
   ...props
 }: EditMealFormProps) {
   const router = useRouter();
+  const [isGeneratingDescription, setIsGeneratingDescription] =
+    React.useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -91,6 +97,51 @@ export default function EditMealForm({
       }
     },
   });
+
+  const handleGenerateDescription = async () => {
+    const title = (form.getFieldValue("name") || "").trim();
+    const cuisine = (form.getFieldValue("cuisine") || "").trim();
+    const mealType = (form.getFieldValue("mealType") || "").trim();
+    const category = cuisine || mealType;
+
+    if (!title) {
+      toast.error("Please enter meal title first");
+      return;
+    }
+
+    if (!category) {
+      toast.error("Please enter cuisine or meal type first");
+      return;
+    }
+
+    setIsGeneratingDescription(true);
+    const toastId = toast.loading("Generating AI description...");
+
+    try {
+      const res = await generateMealDescriptionProvider(title, category);
+
+      if (!res?.status || !res?.data?.success) {
+        toast.error(res?.message || "Failed to generate description", {
+          id: toastId,
+        });
+        return;
+      }
+
+      const generatedDescription = res?.data?.data;
+
+      if (!generatedDescription) {
+        toast.error("No description generated", { id: toastId });
+        return;
+      }
+
+      form.setFieldValue("description", generatedDescription);
+      toast.success("Description generated successfully", { id: toastId });
+    } catch {
+      toast.error("Failed to generate description", { id: toastId });
+    } finally {
+      setIsGeneratingDescription(false);
+    }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -406,7 +457,24 @@ export default function EditMealForm({
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
                     <Field className="col-span-1 md:col-span-2">
-                      <FieldLabel htmlFor={field.name}>Description</FieldLabel>
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <FieldLabel htmlFor={field.name}>
+                          Description
+                        </FieldLabel>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={handleGenerateDescription}
+                          disabled={isGeneratingDescription}
+                          className="gap-1.5"
+                        >
+                          <Sparkles className="h-3.5 w-3.5" />
+                          {isGeneratingDescription
+                            ? "Generating..."
+                            : "Generate with AI"}
+                        </Button>
+                      </div>
                       <Textarea
                         id={field.name}
                         name={field.name}

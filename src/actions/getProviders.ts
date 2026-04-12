@@ -272,3 +272,39 @@ export const updateOrderStatusProvider = async (
     };
   }
 };
+
+export const generateMealDescriptionProvider = async (
+  title: string,
+  category: string,
+) => {
+  try {
+    const cookieStore = await cookies();
+    const response = await fetch(`${BACKEND_URL}/api/ai/meal-description`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify({ title, category }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      return {
+        data: null,
+        message: error.message || "Failed to generate meal description",
+        status: false,
+      };
+    }
+
+    const result = await response.json();
+    return { data: result, error: null, status: true };
+  } catch (error) {
+    console.log(error);
+    return {
+      data: null,
+      message: "Failed to generate meal description",
+      status: false,
+    };
+  }
+};

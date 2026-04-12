@@ -20,6 +20,7 @@ import {
   Sparkles,
   WandSparkles,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -52,6 +53,7 @@ const suggestedTopics = [
 ];
 
 export default function BlogPostGenerator() {
+  const router = useRouter();
   const [topic, setTopic] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<BlogGeneratorResponse | null>(null);
@@ -83,6 +85,9 @@ export default function BlogPostGenerator() {
 
       setResult(payload.data as BlogGeneratorResponse);
       toast.success("Blog post generated and saved successfully");
+      setTimeout(() => {
+        router.push("/admin-dashboard/all-blogs");
+      }, 700);
     } catch (error: any) {
       toast.error(error?.message || "Failed to generate blog post");
     } finally {
@@ -257,13 +262,13 @@ export default function BlogPostGenerator() {
                     Copy content
                   </Button>
                 </div>
-                <pre className="max-h-[28rem] overflow-auto rounded-2xl border border-border/70 bg-slate-950 p-4 text-sm leading-6 text-slate-100 whitespace-pre-wrap">
+                <pre className="max-h-112 overflow-auto rounded-2xl border border-border/70 bg-slate-950 p-4 text-sm leading-6 text-slate-100 whitespace-pre-wrap">
                   {result.generatedContent}
                 </pre>
               </div>
             </>
           ) : (
-            <div className="flex min-h-[28rem] flex-col items-center justify-center rounded-2xl border border-dashed border-border/70 bg-muted/20 p-8 text-center">
+            <div className="flex min-h-112 flex-col items-center justify-center rounded-2xl border border-dashed border-border/70 bg-muted/20 p-8 text-center">
               <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-500/10 text-orange-500">
                 <FileText className="h-7 w-7" />
               </div>
