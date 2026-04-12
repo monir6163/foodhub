@@ -188,7 +188,7 @@ export function RegisterForm({
               height={400}
               src="/hero-food.jpg"
               alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8]"
             />
           </div>
         </CardContent>

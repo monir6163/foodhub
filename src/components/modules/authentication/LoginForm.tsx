@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useForm } from "@tanstack/react-form";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ShieldCheck, Store, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,6 +25,21 @@ const LoginFormSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
+
+const DEMO_CREDENTIALS = {
+  customer: {
+    email: "customer@gmail.com",
+    password: "customer@com",
+  },
+  provider: {
+    email: "provider@gmail.com",
+    password: "provider@com",
+  },
+  admin: {
+    email: "admin@gmail.com",
+    password: "admin@123",
+  },
+};
 
 export function LoginForm({
   className,
@@ -65,6 +80,22 @@ export function LoginForm({
       callbackURL: process.env.NEXT_PUBLIC_FRONTEND_URL!,
     });
   };
+
+  const handleFillDemoCredentials = (
+    type: "customer" | "provider" | "admin",
+  ) => {
+    form.setFieldValue("email", DEMO_CREDENTIALS[type].email);
+    form.setFieldValue("password", DEMO_CREDENTIALS[type].password);
+
+    const label =
+      type === "admin"
+        ? "Demo Admin"
+        : type === "provider"
+          ? "Demo Provider"
+          : "Demo Customer";
+    toast.success(`${label} credentials filled`);
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
@@ -142,6 +173,36 @@ export function LoginForm({
                 }}
               />
 
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => handleFillDemoCredentials("customer")}
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Customer
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => handleFillDemoCredentials("provider")}
+                >
+                  <Store className="h-4 w-4 mr-2" />
+                  Provider
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => handleFillDemoCredentials("admin")}
+                >
+                  <ShieldCheck className="h-4 w-4 mr-2" />
+                  Admin
+                </Button>
+              </div>
+
               <Button type="submit" className="w-full">
                 Log In
               </Button>
@@ -169,7 +230,7 @@ export function LoginForm({
               height={400}
               src="/hero-food.jpg"
               alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.8] "
             />
           </div>
         </CardContent>
