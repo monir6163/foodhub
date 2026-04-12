@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { Footer } from "@/components/layout/Footer";
 import { ProfileDropdown } from "@/components/layout/ProfileDropdown";
 import {
   Breadcrumb,
@@ -65,6 +66,7 @@ export default async function DashboardLayout({
               ? customer
               : provider}
         </div>
+        <Footer />
       </SidebarInset>
     </SidebarProvider>
   );
