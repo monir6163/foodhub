@@ -21,7 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatBDT } from "@/lib/utils";
-import { MoreVertical, UtensilsCrossed } from "lucide-react";
+import { MoreVertical, Star, UtensilsCrossed } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -156,6 +156,12 @@ export default function MealCard({ meal }: MealCardProps) {
             {meal.spiceLevel && (
               <Badge variant="outline" className="text-xs">
                 {meal.spiceLevel}
+              </Badge>
+            )}
+            {typeof meal.rating === "number" && (
+              <Badge variant="outline" className="text-xs gap-1">
+                <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                {meal.rating.toFixed(1)}
               </Badge>
             )}
           </div>

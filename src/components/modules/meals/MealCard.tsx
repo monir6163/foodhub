@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useCartStore } from "@/store/useCartStore";
 import { MealCardProps } from "@/types/meal.type";
-import { Clock, Eye, Flame, ShoppingCart, Utensils } from "lucide-react";
+import { Clock, Eye, Flame, ShoppingCart, Star, Utensils } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -94,6 +94,12 @@ export function MealCard({ meal }: MealCardProps) {
         </div>
 
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
+          {typeof meal.rating === "number" && (
+            <div className="flex items-center gap-1">
+              <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+              <span className="font-medium">{meal.rating.toFixed(1)}</span>
+            </div>
+          )}
           {meal.mealType && (
             <div className="flex items-center gap-1">
               <Clock className="h-3 w-3" />

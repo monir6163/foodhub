@@ -35,6 +35,7 @@ export interface MealType {
   image: string | null;
   isAvailable: boolean;
   calories: number;
+  rating?: number;
   ingredients: string[];
   cuisine?: string[];
   dietary?: string[];
@@ -64,6 +65,7 @@ export interface MealType {
   image: string | null;
   isAvailable: boolean;
   calories: number;
+  rating?: number;
   ingredients: string[];
   cuisine?: string[];
   dietary?: string[];
